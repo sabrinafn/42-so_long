@@ -3,14 +3,14 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <mlx.h>
 
 typedef struct s_data
 {
-	void		*mlx_ptr; // MLX pointer
-	void		*win_ptr; // MLX window pointer
-	void		*textures[5]; // MLX image pointers (on the stack)
-	t_map		*map; // Map pointer (contains map details - preferably kept on the stack)
+	void		*mlx_ptr;
+	void		*win_ptr;
+	void		*textures[5];
+	t_map		*map;
 }	t_data;
-
 #endif

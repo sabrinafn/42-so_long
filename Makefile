@@ -7,7 +7,8 @@ FLAGS := -Wall -Wextra -Werror
 HEADER := so_long.h
 
 INCLUDES := -I/usr/include -Imlx
-MLX_FLAGS := -Lmlx_linux -lmlx_Linux -L/usr/lib/x11 -Imlx_linux -lXext -lX11
+
+MLX_FLAGS := -Lmlx -lmlx -L/usr/lib/x11 -lXext -lX11
 
 CFILES := main.c
 
