@@ -5,7 +5,6 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <stdbool.h>
 
 //minilibx
 //# include "mlx/mlx.h"
@@ -19,30 +18,6 @@
 # define RED_PIXEL 0xFF0000
 # define GREEN_PIXEL 0xFF00
 # define WHITE_PIXEL 0xFFFFFF
-
-// GET_NEXT_LINE
-char		*get_next_line(int fd);
-size_t		ft_strlen(const char *str);
-char		*ft_strdup(const char *src);
-char		*ft_strchr(const char *str, int c);
-char		*ft_strjoin(char const *s1, char const *s2);
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
-
-typedef struct s_list
-{
-	void	*content;
-	struct s_list	*next;
-}	t_list;
-
-typedef struct s_map
-{
-	char	**map;
-	int		length;
-	int		height;
-}	t_map;
 
 typedef struct s_img
 {
@@ -68,6 +43,5 @@ typedef struct s_rect
 	int height;
 	int color;
 }	t_rect;
-
 
 #endif
