@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/05 11:27:33 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/05 11:45:20 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,17 +229,19 @@ void	flood_fill(t_map *map, int x, int y) //x == -, y == |
 {
 	if (map -> map[y][x] != '1')
 	{
+		printf("set mapyx to X\n");
 		map -> map[y][x] = 'X';
 	}
-	else if (map -> map[y][x] == 'X' ||
-				map -> map[y][x] == '1')
+	else if (map -> map[y][x] == 'X')
 	{
+		printf("returning\n");
 		return ;
 	}
 	flood_fill(map, x - 1, y);
 	flood_fill(map, x, y - 1);
 	flood_fill(map, x + 1, y);
 	flood_fill(map, x, y + 1);
+	printf("*\n");
 }
 
 int	is_map_valid(t_map *map)
@@ -259,7 +261,9 @@ int	is_map_valid(t_map *map)
 	printf("[player -> x = %d]\n", player -> x);
 	printf("[player -> y = %d]\n", player -> y);
 	*/
+	printf("0\n");
 	flood_fill(copy, player -> x, player -> y);
+	printf("001\n");
 	int j = 0;
 	while (j < copy -> height)
 	{
