@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
+/*   Updated: 2024/09/05 10:53:35 by sabrifer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 #define SO_LONG_H
 
@@ -36,6 +48,13 @@ typedef struct s_list
 	void	*content;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_coordinates
+{
+	char	value;
+	int		x;
+	int		y;
+}	t_coordinates;
 
 typedef struct s_map
 {
