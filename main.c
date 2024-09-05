@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/05 11:45:20 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:08:32 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,13 @@ int	is_rectangular(t_map *map)
 	i = 0;
 	while (map -> map[i])
 	{
-		if (ft_strlen(map -> map[i]) != (size_t)map -> length)
+		if (ft_strlen(map -> map[i]) != (size_t)map -> length - 1)
+		{
+			printf("value of i: %d\n", i);
+			printf("map -> map[i]: %s\n", map -> map[i]);
+			printf("value of i: %d\n", i);
 			return (0);
+		}
 		i++;
 	}
 	return (1);
@@ -165,7 +170,7 @@ t_map	*ft_map_copy(t_map *map)
 		printf("map_copy, malloc null\n");
 		return (NULL);
 	}
-	str = (char **)malloc(sizeof(char *) * map -> height + 1);
+	str = (char **)malloc(sizeof(char *) * (map -> height + 1));
 	if (!str)
 	{
 		printf("str, malloc null\n");
@@ -177,7 +182,12 @@ t_map	*ft_map_copy(t_map *map)
 		map_copy -> map[i] = ft_strdup(map -> map[i]);
 		i++;
 	}
+	map_copy -> map[i] = NULL;
+	map_copy -> height = map -> height;
+	map_copy -> length = map -> length;
+
 	/* printing map_copy
+	printf("copy copied: \n");
 	while (j < i)
 	{
 		printf("%s", map_copy -> map[j]);
@@ -215,33 +225,64 @@ t_coordinates	*find_start_pos(t_map *map)
 				p_pos -> value = map -> map[i][j];
 				p_pos -> x = j;
 				p_pos -> y = i;
+				//printf("pos: %c and x = %d and y = %d\n\n", p_pos -> value, p_pos -> x, p_pos -> y);
 				return (p_pos);
 			}
 			j++;
 		}
 		i++;
 	}
-	printf("NULL\n");
 	return (NULL);
 }
 
 void	flood_fill(t_map *map, int x, int y) //x == -, y == |
 {
-	if (map -> map[y][x] != '1')
-	{
-		printf("set mapyx to X\n");
-		map -> map[y][x] = 'X';
-	}
-	else if (map -> map[y][x] == 'X')
-	{
-		printf("returning\n");
+	if (map -> map[y][x] == '1')
 		return ;
-	}
+	map -> map[y][x] = '1';
 	flood_fill(map, x - 1, y);
 	flood_fill(map, x, y - 1);
 	flood_fill(map, x + 1, y);
 	flood_fill(map, x, y + 1);
-	printf("*\n");
+}
+
+int	check_flood_fill(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (map -> map[i] != NULL)
+	{
+		j = 0;
+		while (map -> map[i][j] != '\n')
+		{
+			if (map -> map[i][j] == '0')
+			{
+				printf("found: 0\n");
+				return (0);
+			}
+			if (map -> map[i][j] == 'C')
+			{
+				printf("found: C\n");
+				return (0);
+			}
+			if (map -> map[i][j] == 'E')
+			{
+				printf("found: E\n");
+				return (0);
+			}
+			if (map -> map[i][j] == 'P')
+			{
+				printf("found: P\n");
+				return (0);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }
 
 int	is_map_valid(t_map *map)
@@ -253,48 +294,44 @@ int	is_map_valid(t_map *map)
 	if (!copy)
 	{
 		printf("ft_map_copy == null\n");
-		return (-1);
+		return (0);
 	}
 	player = find_start_pos(copy);
-
-	/*printf("[player -> value = %c]\n", player -> value);
-	printf("[player -> x = %d]\n", player -> x);
-	printf("[player -> y = %d]\n", player -> y);
-	*/
-	printf("0\n");
 	flood_fill(copy, player -> x, player -> y);
-	printf("001\n");
-	int j = 0;
-	while (j < copy -> height)
-	{
-		printf("%s", copy -> map[j]);
-		j++;
-	}
+
+	if (!check_flood_fill(copy))
+		return (0);
 	return (1);
 }
 
-void	check_map(t_map *map)
+int	check_map(t_map *map)
 {
 	if (!is_rectangular(map))
-		printf("not a rectangular map\n");
-	else
-		printf("it's a rectangular map\n");
+	{	
+		printf("ERROR. not a rectangular map\n");
+		return (0);
+	}
 	if (!is_wall(map))
-		printf("no wall in borders of map\n");
-	else
-		printf("wall in borders of map\n");
+	{
+		printf("ERROR. no wall in borders of map\n");
+		return (0);
+	}
 	if (!duplicate_exit_or_start(map))
-		printf("there are more than 1 exit and 1 starting position\n");
-	else
-		printf("only 1 exit and 1 starting position\n");
+	{
+		printf("ERROR. there are more than 1 exit and 1 starting position\n");
+		return (0);
+	}
 	if (!collectibles(map))
-		printf("there are no collectibles\n");
-	else
-		printf("there is at least 1 collectible\n");
+	{
+		printf("ERROR. there are no collectibles\n");
+		return (0);
+	}
 	if (!is_map_valid(map))
-		printf("there's not a valid path in map\n");
-	else
-		printf("there's a valid path in map\n");
+	{
+		printf("ERROR. there's not a valid path in map\n");
+		return (0);
+	}
+	return (1);
 }
 
 void	read_map(char *str)
@@ -317,22 +354,9 @@ void	read_map(char *str)
 		map[i] = line_gnl;
 		i++;
 	}
+	map[i] = NULL;
 	map_struct = populate_map_struct(map);
-	int j = 0;
-	while (j < i)
-	{
-		printf("%s", map[j]);
-		j++;
-	}
 	check_map(map_struct); // map arrays need to be freed after use.
-	
-	j = 0;
-	while (j < i)
-	{
-		printf("%s", map[j]);
-		j++;
-	}
-	
 }
 
 int	main(int ac, char **av)
