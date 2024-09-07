@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/07 12:56:18 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/07 13:19:25 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,52 @@ int	duplicate_exit_or_start(t_map *map)
 	return (1);
 }
 
+int	is_char_map_exit(t_map *map)
+{
+	int		i;
+	int		j;
+	char	exit;
+
+	i = 0;
+	j = 0;
+	exit = 'E';
+	while (map -> map[i])
+	{
+		j = 0;
+		while (map -> map[i][j] != '\n' && map -> map[i][j] != '\0')
+		{
+			if (map -> map[i][j] == exit)
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	is_char_player(t_map *map)
+{
+	int		i;
+	int		j;
+	char	player;
+
+	i = 0;
+	j = 0;
+	player = 'C';
+	while (map -> map[i])
+	{
+		j = 0;
+		while (map -> map[i][j] != '\n' && map -> map[i][j] != '\0')
+		{
+			if (map -> map[i][j] == player)
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	collectibles(t_map *map)
 {
 	int		i;
@@ -149,7 +195,7 @@ int	collectibles(t_map *map)
 	while (map -> map[i])
 	{
 		j = 0;
-		while (map -> map[i][j] != '\n')
+		while (map -> map[i][j] != '\n' && map -> map[i][j] != '\0')
 		{
 			if (map -> map[i][j] == coin)
 				return (1);
@@ -341,14 +387,24 @@ int	check_map(t_map *map)
 		printf("ERROR. not a wall found around map\n");
 		return (0);
 	}
-	if (!duplicate_exit_or_start(map))
-	{
-		printf("ERROR. there are more than 1 exit and 1 starting position\n");
-		return (0);
-	}
 	if (!collectibles(map))
 	{
 		printf("ERROR. there are no collectibles\n");
+		return (0);
+	}
+	if (!is_char_player(map))
+	{
+		printf("ERROR. there isn't a P char\n");
+		return (0);
+	}
+	if (!is_char_map_exit(map))
+	{
+		printf("ERROR. there isn't a E char\n");
+		return (0);
+	}
+	if (!duplicate_exit_or_start(map))
+	{
+		printf("ERROR. there are more than 1 exit and 1 starting position\n");
 		return (0);
 	}
 	if (!is_map_valid(map))
@@ -356,7 +412,6 @@ int	check_map(t_map *map)
 		printf("ERROR. there's not a valid path in map\n");
 		return (0);
 	}
-	printf("maps are ok.\n");
 	return (1);
 }
 
@@ -384,6 +439,8 @@ int	read_map(char *str)
 	if (map[0] == NULL)
 		return (0);
 	map_struct = populate_map_struct(map);
+	if (!map_struct)
+		return (0);
 	int j = 0;
 	while (map_struct -> map[j])
 	{
@@ -399,6 +456,7 @@ int	read_map(char *str)
 		j++;
 	}
 	free(map_struct);
+	close(fd);
 	return (1);
 }
 
