@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/05 10:53:35 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/07 12:55:27 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ size_t		ft_strlen(const char *str);
 char		*ft_strdup(const char *src);
 char		*ft_strchr(const char *str, int c);
 char		*ft_strjoin(char const *s1, char const *s2);
+
+char	*ft_strrchr(const char *str, int c);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1

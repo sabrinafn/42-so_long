@@ -13,6 +13,7 @@ MLX_FLAGS := -Lmlx -lmlx -L/usr/lib/x11 -lXext -lX11
 CFILES := main.c \
 	get_next_line.c \
 	get_next_line_utils.c \
+	ft_utils.c
 
 OFILES := $(CFILES:.c=.o)
 

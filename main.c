@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/05 15:08:32 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/07 12:56:18 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ t_map	*populate_map_struct(char **map)
 		printf("map_struct, malloc return NULL\n");
 		return (NULL);
 	}
+/*	length = 0;
+	while (map[0][length] != '\0' && map[0][length] != '\n' && map[0][length] != '\r')
+		length++;*/
 	length = ft_strlen(map[0]);
 	height = 0;
 	while (map[height])
@@ -61,13 +64,10 @@ int	is_rectangular(t_map *map)
 	i = 0;
 	while (map -> map[i])
 	{
-		if (ft_strlen(map -> map[i]) != (size_t)map -> length - 1)
-		{
-			printf("value of i: %d\n", i);
-			printf("map -> map[i]: %s\n", map -> map[i]);
-			printf("value of i: %d\n", i);
+		if (i == (map -> height - 1) && ft_strlen(map -> map[i]) == (size_t)map -> length - 1)
+			return (1); // check if it's the last line and the line has no new line at the end
+		if (ft_strlen(map -> map[i]) != (size_t)map -> length)
 			return (0);
-		}
 		i++;
 	}
 	return (1);
@@ -85,9 +85,14 @@ int	is_wall(t_map *map)
 	while (map -> map[i])
 	{
 		j = 0;
-		while (map -> map[i][j] != '\n')
+		while (map -> map[i][j] != '\n' && map -> map[i][j] != '\0')
 		{
-			if (i == 0 || i == map -> height - 1 || j == 0 || j == map -> length - 2)
+			if (i == 0 || j == 0)
+			{
+				if (map -> map[i][j] != wall)
+					return (0);
+			}
+			else if (i == map -> height - 1 || j == map -> length - 2)
 			{
 				if (map -> map[i][j] != wall)
 					return (0);
@@ -115,7 +120,7 @@ int	duplicate_exit_or_start(t_map *map)
 	while (map -> map[i])
 	{
 		j = 0;
-		while (map -> map[i][j] != '\n')
+		while (map -> map[i][j] != '\n' && map -> map[i][j] != '\0')
 		{
 			c = map -> map[i][j];
 			if (c == exit || c == start)
@@ -218,7 +223,7 @@ t_coordinates	*find_start_pos(t_map *map)
 	while (map -> map[i])
 	{
 		j = 0;
-		while (map -> map[i][j] != '\n')
+		while (map -> map[i][j] != '\n' && map -> map[i][j] != '\0')
 		{
 			if (map -> map[i][j] == needle)
 			{
@@ -256,13 +261,13 @@ int	check_flood_fill(t_map *map)
 	while (map -> map[i] != NULL)
 	{
 		j = 0;
-		while (map -> map[i][j] != '\n')
+		while (map -> map[i][j] != '\n' && map -> map[i][j] != '\0')
 		{
-			if (map -> map[i][j] == '0')
+		/*	if (map -> map[i][j] == '0')
 			{
 				printf("found: 0\n");
 				return (0);
-			}
+			}*/
 			if (map -> map[i][j] == 'C')
 			{
 				printf("found: C\n");
@@ -298,9 +303,29 @@ int	is_map_valid(t_map *map)
 	}
 	player = find_start_pos(copy);
 	flood_fill(copy, player -> x, player -> y);
-
+	int j = 0;
+	/*while (copy -> map[j])
+	{
+		printf("%s", copy -> map[j]);
+		j++;
+	}
+	j = 0;*/
 	if (!check_flood_fill(copy))
+	{
+		while (copy -> map[j])
+		{
+			free(copy -> map[j]);
+			j++;
+		}
+		free(copy);
 		return (0);
+	}
+	while (copy -> map[j])
+	{
+		free(copy -> map[j]);
+		j++;
+	}
+	free(copy);
 	return (1);
 }
 
@@ -313,7 +338,7 @@ int	check_map(t_map *map)
 	}
 	if (!is_wall(map))
 	{
-		printf("ERROR. no wall in borders of map\n");
+		printf("ERROR. not a wall found around map\n");
 		return (0);
 	}
 	if (!duplicate_exit_or_start(map))
@@ -331,10 +356,11 @@ int	check_map(t_map *map)
 		printf("ERROR. there's not a valid path in map\n");
 		return (0);
 	}
+	printf("maps are ok.\n");
 	return (1);
 }
 
-void	read_map(char *str)
+int	read_map(char *str)
 {
 	int		i;
 	int		fd;
@@ -345,7 +371,7 @@ void	read_map(char *str)
 	i = 0;
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
-		return ;
+		return (0);
 	while (1)
 	{
 		line_gnl = get_next_line(fd);
@@ -355,15 +381,51 @@ void	read_map(char *str)
 		i++;
 	}
 	map[i] = NULL;
+	if (map[0] == NULL)
+		return (0);
 	map_struct = populate_map_struct(map);
-	check_map(map_struct); // map arrays need to be freed after use.
+	int j = 0;
+	while (map_struct -> map[j])
+	{
+		printf("%s", map_struct -> map[j]);
+		j++;
+	}
+	if (!check_map(map_struct)) // map arrays need to be freed after use.
+		return (0);
+	j = 0;
+	while (map_struct -> map[j])
+	{
+		free(map_struct -> map[j]);
+		j++;
+	}
+	free(map_struct);
+	return (1);
+}
+
+int	check_ber(char *str)
+{
+	char	*str_found;
+	int		i;
+
+	i = 0;
+	str_found = ft_strrchr(str, '.');
+	if (!str_found)	//char	*ft_strrchr(const char *str, int c)
+		return (0);
+	if (ft_strncmp(str_found, ".ber", 4) == 0)
+		return (1);
+	return (0);	
 }
 
 int	main(int ac, char **av)
 {
 	if (ac > 1)
 	{
-		read_map(av[1]);
+		if (check_ber(av[1]) &&	read_map(av[1]))
+		{
+			printf("ALL Ok\n");
+		}
+		else
+			printf("ERROR\n");
 	}
 	else
 		printf("Error\n");
