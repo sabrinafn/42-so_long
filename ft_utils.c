@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:43:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/07 12:55:07 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/09 14:30:22 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,21 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	if (i == n)
 		return (0);
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+void	*ft_memset(void *dest, int c, size_t count)
+{
+	unsigned char	*new;
+	unsigned char	j;
+	size_t			i;
+
+	new = dest;
+	j = c;
+	i = 0;
+	while (i < count)
+	{
+		new[i] = j;
+		i++;
+	}
+	return (dest);
 }
