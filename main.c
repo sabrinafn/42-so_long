@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/07 13:19:25 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/09 13:12:26 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,59 @@ t_map	*populate_map_struct(char **map)
 		printf("map_struct, malloc return NULL\n");
 		return (NULL);
 	}
-/*	length = 0;
+	/*length = 0;
 	while (map[0][length] != '\0' && map[0][length] != '\n' && map[0][length] != '\r')
 		length++;*/
-	length = ft_strlen(map[0]);
+	length = ft_strlen(map[0]); // len of first array found
 	height = 0;
-	while (map[height])
+	while (map[height]) // how many arrays there are
 		height++;
 	map_struct -> map = map;
-	map_struct -> length = length;
+	map_struct -> length = length - 1; // previously: length;
 	map_struct -> height = height;
 	return (map_struct);
 }
-
+/*
 int	is_rectangular(t_map *map)
 {
 	int		i;
+	int		current_len;
 
 	i = 0;
+	current_len = 0;
 	while (map -> map[i])
 	{
-		if (i == (map -> height - 1) && ft_strlen(map -> map[i]) == (size_t)map -> length - 1)
+		current_len = ft_strlen(map -> map[i]);
+		if (i == (map -> height - 1) && current_len == map -> length - 1)
+		{
+			printf("first if statement == 1\n");
 			return (1); // check if it's the last line and the line has no new line at the end
-		if (ft_strlen(map -> map[i]) != (size_t)map -> length)
+		}
+		if (current_len != map -> length)
+		{
+			printf("second if statement == 0\n");
+			return (0);
+		}
+		i++;
+	}
+	printf("end of function == 1\n");
+	return (1);
+}
+*/
+int	is_rectangular(t_map *map)
+{
+	int		i;
+	int		current_len;
+
+	i = 0;
+	current_len = 0;
+	while (map -> map[i])
+	{
+		current_len = ft_strlen(map -> map[i]);
+		if (map -> map[i][current_len - 1] == '\n')
+			current_len -= 1;
+		printf("current_len = %d\n", current_len);
+		if (current_len != map -> length)
 			return (0);
 		i++;
 	}
@@ -92,7 +122,7 @@ int	is_wall(t_map *map)
 				if (map -> map[i][j] != wall)
 					return (0);
 			}
-			else if (i == map -> height - 1 || j == map -> length - 2)
+			else if (i == map -> height - 1 || j == map -> length - 1) // -2
 			{
 				if (map -> map[i][j] != wall)
 					return (0);
@@ -168,7 +198,7 @@ int	is_char_player(t_map *map)
 
 	i = 0;
 	j = 0;
-	player = 'C';
+	player = 'P';
 	while (map -> map[i])
 	{
 		j = 0;
@@ -204,6 +234,28 @@ int	collectibles(t_map *map)
 		i++;
 	}
 	return (0);
+}
+
+int	not_valid_chars(t_map *map)
+{
+	int		i;
+	int		j;
+	const char	valid_char[] = "01CEP";
+
+	i = 0;
+	j = 0;
+	while (map -> map[i])
+	{
+		j = 0;
+		while (map -> map[i][j] != '\n' && map -> map[i][j] != '\0')
+		{
+			if (!ft_strrchr(valid_char, map -> map[i][j]))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }
 
 t_map	*ft_map_copy(t_map *map)
@@ -387,6 +439,11 @@ int	check_map(t_map *map)
 		printf("ERROR. not a wall found around map\n");
 		return (0);
 	}
+	if (!not_valid_chars(map))
+	{
+		printf("ERROR. there are invalid chars in map\n");
+		return (0);
+	}
 	if (!collectibles(map))
 	{
 		printf("ERROR. there are no collectibles\n");
@@ -410,6 +467,7 @@ int	check_map(t_map *map)
 	if (!is_map_valid(map))
 	{
 		printf("ERROR. there's not a valid path in map\n");
+		printf("111111\n");
 		return (0);
 	}
 	return (1);
@@ -441,20 +499,20 @@ int	read_map(char *str)
 	map_struct = populate_map_struct(map);
 	if (!map_struct)
 		return (0);
-	int j = 0;
+	/*int j = 0;
 	while (map_struct -> map[j])
 	{
 		printf("%s", map_struct -> map[j]);
 		j++;
-	}
+	}*/
 	if (!check_map(map_struct)) // map arrays need to be freed after use.
 		return (0);
-	j = 0;
+/*	j = 0;
 	while (map_struct -> map[j])
 	{
 		free(map_struct -> map[j]);
 		j++;
-	}
+	}*/
 	free(map_struct);
 	close(fd);
 	return (1);
@@ -478,7 +536,12 @@ int	main(int ac, char **av)
 {
 	if (ac > 1)
 	{
-		if (check_ber(av[1]) &&	read_map(av[1]))
+		if (!check_ber(av[1]))
+		{
+			printf("not a ber file\n");
+			return (0);
+		}
+		if (read_map(av[1]))
 		{
 			printf("ALL Ok\n");
 		}
