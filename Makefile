@@ -13,7 +13,11 @@ MLX_FLAGS := -Lmlx -lmlx -L/usr/lib/x11 -lXext -lX11
 CFILES := main.c \
 	get_next_line.c \
 	get_next_line_utils.c \
-	ft_utils.c
+	ft_utils.c \
+	ft_args_check.c \
+	ft_args_checklist.c \
+	ft_init_map.c \
+	ft_valid_map_functions.c
 
 OFILES := $(CFILES:.c=.o)
 
