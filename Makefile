@@ -6,9 +6,11 @@ FLAGS := -Wall -Wextra -Werror
 
 HEADER := so_long.h
 
-INCLUDES := -I/usr/include -Imlx
+MLXI := ./MLX42
 
-MLX_FLAGS := -Lmlx -lmlx -L/usr/lib/x11 -lXext -lX11
+INCLUDES := -I/MLX42
+
+MLX_FLAGS := ./MLX42/build/libmlx42.a -L/usr/lib/x11 -lXext -lX11
 
 CFILES := main.c \
 	get_next_line.c \
@@ -26,6 +28,9 @@ OFILES := $(CFILES:.c=.o)
 
 $(NAME): $(OFILES)
 	$(CC) $(FLAGS) $^ -o $@ $(MLX_FLAGS)
+
+libmlx:
+	@cmake $(MLXI) -B $(MLXI)/build && make -C $(MLXI)/build -j4
 
 all: $(NAME)
 
