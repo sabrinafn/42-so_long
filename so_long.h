@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/09 19:39:48 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:32:27 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@
 
 //minilibx
 //# include "mlx/mlx.h"
-# include <mlx.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
+//# include <mlx.h>
+//# include <X11/keysym.h>
+//# include <X11/X.h>
+//# include "MLX/includes/MLX42.h"
+# include "MLX42/include/MLX42/MLX42.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
