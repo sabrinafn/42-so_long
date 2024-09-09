@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/07 12:55:27 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/09 14:30:40 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <fcntl.h>
 
 //minilibx
 //# include "mlx/mlx.h"
 # include <mlx.h>
 # include <X11/keysym.h>
 # include <X11/X.h>
-
-# define WINDOW_WIDTH 600
-# define WINDOW_HEIGHT 300
-
-# define RED_PIXEL 0xFF0000
-# define GREEN_PIXEL 0xFF00
-# define WHITE_PIXEL 0xFFFFFF
 
 // GET_NEXT_LINE
 char		*get_next_line(int fd);
@@ -40,7 +34,8 @@ char		*ft_strchr(const char *str, int c);
 char		*ft_strjoin(char const *s1, char const *s2);
 
 char	*ft_strrchr(const char *str, int c);
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	*ft_memset(void *dest, int c, size_t count);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
@@ -65,31 +60,5 @@ typedef struct s_map
 	int		length;
 	int		height;
 }	t_map;
-
-typedef struct s_img
-{
-    void	*mlx_img;
-    char	*addr;
-    int		bpp; /* bits per pixel */
-    int		line_len;
-    int		endian;
-}	t_img;
-
-typedef struct s_data
-{
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_img		img;
-}	t_data;
-
-typedef struct s_rect
-{
-	int x;
-	int y;
-	int width;
-	int height;
-	int color;
-}	t_rect;
-
 
 #endif
