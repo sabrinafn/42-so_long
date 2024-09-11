@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/09 19:45:07 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/10 10:55:14 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int	main(int ac, char **av)
 		if (map)
 		{
 			if (check_map(map))
+			{
 				printf("check_map OK\n");
+				init_window(map);
+			}			
 			else
 				printf("check_map KO\n");
 			free(map);

@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/09 20:32:27 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/10 20:03:47 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,10 @@
 # include <fcntl.h>
 
 //minilibx
-//# include "mlx/mlx.h"
-//# include <mlx.h>
-//# include <X11/keysym.h>
-//# include <X11/X.h>
-//# include "MLX/includes/MLX42.h"
 # include "MLX42/include/MLX42/MLX42.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
 
-typedef struct s_list
-{
-	void	*content;
-	struct s_list	*next;
-}	t_list;
+// STRUCTURES FOR THE ARGS CHECK
 
 typedef struct s_coordinates
 {
@@ -52,13 +40,37 @@ typedef struct s_map
 	int		height;
 }	t_map;
 
-// GET_NEXT_LINE
+// STRUCTURES FOR THE MAP WINDOW?
+
+typedef struct s_data
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+}	t_data;
+
+// FUNCTIONS FOR MINILIBX
+
+# define WINDOW_WIDTH 600
+# define WINDOW_HEIGHT 1000
+
+void	init_window(t_map *map);
+
+
+/***GET_NEXT_LINE******/
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
 char		*get_next_line(int fd);
 size_t		ft_strlen(const char *str);
 char		*ft_strdup(const char *src);
 char		*ft_strchr(const char *str, int c);
 char		*ft_strjoin(char const *s1, char const *s2);
 
+/*********************/
+
+// FT_UTILS.C
 char	*ft_strrchr(const char *str, int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memset(void *dest, int c, size_t count);
