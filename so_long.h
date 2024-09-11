@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/10 20:03:47 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/11 17:00:43 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,16 @@ typedef struct s_data
 
 # define WINDOW_WIDTH 600
 # define WINDOW_HEIGHT 1000
+# define TILE_SIZE 32 // each tile on the map will be 32x32 pixels
 
+// FT_INIT_WINDOW
 void	init_window(t_map *map);
 
+// FT_PUT_IMAGES
+void	place_exit(mlx_t *mlx, char **map, int rows, int cols);
+void	place_coin(mlx_t *mlx, char **map, int rows, int cols);
+void	place_player(mlx_t *mlx, char **map, int rows, int cols);
+void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols);
 
 /***GET_NEXT_LINE******/
 

@@ -20,7 +20,8 @@ CFILES := main.c \
 	ft_args_checklist.c \
 	ft_init_map.c \
 	ft_valid_map_functions.c \
-	ft_init_window.c
+	ft_init_window.c \
+	ft_put_images.c
 
 OFILES := $(CFILES:.c=.o)
 
