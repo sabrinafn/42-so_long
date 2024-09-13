@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/11 17:00:43 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:48:54 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ typedef struct s_coordinates
 
 typedef struct s_map
 {
-	char	**map;
-	int		length;
-	int		height;
+	char			**map;
+	int				length;
+	int				height;
+	t_coordinates	coords;
 }	t_map;
 
 // STRUCTURES FOR THE MAP WINDOW?

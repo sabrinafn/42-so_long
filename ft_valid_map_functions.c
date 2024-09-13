@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_other_functions.c                               :+:      :+:    :+:   */
+/*   ft_valid_map_functions.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/09 19:43:50 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:43:34 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_coordinates	*populate_coord(char p, int x, int y)
 {
 	t_coordinates	*coord;
 
-	coord = (t_coordinates *)malloc(sizeof(t_coordinates));
+	coord = malloc(sizeof(t_coordinates));
 	if (!coord)
 		return (NULL);
 	coord -> value = p;
@@ -125,7 +125,10 @@ int	is_map_valid(t_map *map)
 		free(copy -> map[j]);
 		j++;
 	}
+	printf("map in struct was freed\n");
 	free(copy);
+	printf("struct was freed\n");
+	free(player);
 	if (!res)
 		return (0);
 	return (1);

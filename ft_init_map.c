@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/09 18:50:04 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:31:49 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**read_map(int fd, int line_count)
 	char		**map;
 
 	i = 0;
-	map = (char **)malloc(sizeof(char *) * line_count + 1);
+	map = (char **)malloc(sizeof(char *) * (line_count + 1));
 	if (!map)
 		return (NULL);
 	while (1)

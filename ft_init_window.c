@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/11 17:58:34 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:50:06 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	init_window(t_map *map)
 	// LOAD IMAGES/TEXTURE
 	render_initial_map(mlx, map -> map, map -> height, map -> length);
 
-	place_player(mlx, map -> map, map -> height, map -> length);	
-	place_coin(mlx, map -> map, map -> height, map -> length);	
-	place_exit(mlx, map -> map, map -> height, map -> length);	
+	place_player(mlx, map -> map, map -> height, map -> length);
+	place_coin(mlx, map -> map, map -> height, map -> length);
+	place_exit(mlx, map -> map, map -> height, map -> length);
 
 	mlx_key_hook(mlx, &key_pressed_function, mlx);
 	mlx_loop(mlx);
