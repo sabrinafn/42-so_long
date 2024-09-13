@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/13 10:48:54 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:11:43 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,20 @@ typedef struct s_coordinates
 	int		y;
 }	t_coordinates;
 
+typedef struct s_player
+{
+	mlx_image_t	*value;
+	int		x;
+	int		y;
+}	t_player;
+
 typedef struct s_map
 {
 	char			**map;
 	int				length;
 	int				height;
-	t_coordinates	coords;
+	mlx_t			*mlx;
+	t_player		player;
 }	t_map;
 
 // STRUCTURES FOR THE MAP WINDOW?
@@ -61,7 +69,7 @@ void	init_window(t_map *map);
 // FT_PUT_IMAGES
 void	place_exit(mlx_t *mlx, char **map, int rows, int cols);
 void	place_coin(mlx_t *mlx, char **map, int rows, int cols);
-void	place_player(mlx_t *mlx, char **map, int rows, int cols);
+void	place_player(mlx_t *mlx, t_map *map);//har **map, int rows, int cols);
 void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols);
 
 /***GET_NEXT_LINE******/
