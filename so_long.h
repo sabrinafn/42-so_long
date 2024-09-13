@@ -67,8 +67,8 @@ typedef struct s_data
 void	init_window(t_map *map);
 
 // FT_PUT_IMAGES
-void	place_exit(mlx_t *mlx, char **map, int rows, int cols);
-void	place_coin(mlx_t *mlx, char **map, int rows, int cols);
+void	place_exit(mlx_t *mlx, t_map *map);//char **map, int rows, int cols);
+void	place_coin(mlx_t *mlx, t_map *map);//char **map, int rows, int cols);
 void	place_player(mlx_t *mlx, t_map *map);//har **map, int rows, int cols);
 void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols);
 

@@ -74,10 +74,10 @@ void	place_player(mlx_t *mlx, t_map *map)//char **map, int rows, int cols)
 
 	player = mlx_texture_to_image(mlx, mlx_load_png("./images/bananacat.png"));
 	i = 0;
-	while (i < map->height)//rows)
+	while (i < map->height) //rows)
 	{
 		j = 0;
-		while (j < map->length)//cols)
+		while (j < map->length) //cols)
 		{
 			if (map->map[i][j] == 'P')
 			{
@@ -92,7 +92,8 @@ void	place_player(mlx_t *mlx, t_map *map)//char **map, int rows, int cols)
 	}
 }
 
-void	place_coin(mlx_t *mlx, char **map, int rows, int cols)
+//void	place_coin(mlx_t *mlx, char **map, int rows, int cols)
+void	place_coin(mlx_t *mlx, t_map *map)
 {
 	mlx_image_t	*coin;
 	int			i;
@@ -100,12 +101,12 @@ void	place_coin(mlx_t *mlx, char **map, int rows, int cols)
 
 	coin = mlx_texture_to_image(mlx, mlx_load_png("./images/coin.png"));
 	i = 0;
-	while (i < rows)
+	while (i < map->height)
 	{
 		j = 0;
-		while (j < cols)
+		while (j < map->length)
 		{
-			if (map[i][j] == 'C')
+			if (map->map[i][j] == 'C')
 				mlx_image_to_window(mlx, coin, j * TILE_SIZE, i * TILE_SIZE);
 			j++;
 		}
@@ -113,7 +114,8 @@ void	place_coin(mlx_t *mlx, char **map, int rows, int cols)
 	}
 }
 
-void	place_exit(mlx_t *mlx, char **map, int rows, int cols)
+//void	place_exit(mlx_t *mlx, char **map, int rows, int cols)
+void	place_exit(mlx_t *mlx, t_map *map)
 {
 	mlx_image_t	*exit;
 	int			i;
@@ -121,12 +123,12 @@ void	place_exit(mlx_t *mlx, char **map, int rows, int cols)
 
 	exit = mlx_texture_to_image(mlx, mlx_load_png("./images/exit.png"));
 	i = 0;
-	while (i < rows)
+	while (i < map->height)
 	{
 		j = 0;
-		while (j < cols)
+		while (j < map->length)
 		{
-			if (map[i][j] == 'E')
+			if (map->map[i][j] == 'E')
 				mlx_image_to_window(mlx, exit, j * TILE_SIZE, i * TILE_SIZE);
 			j++;
 		}

@@ -91,8 +91,8 @@ void	init_window(t_map *map)
 	render_initial_map(map->mlx, map -> map, map -> height, map -> length);
 
 	place_player(map->mlx, map);//map -> map, map -> height, map -> length);
-	place_coin(map->mlx, map -> map, map -> height, map -> length);
-	place_exit(map->mlx, map -> map, map -> height, map -> length);
+	place_coin(map->mlx, map);//map -> map, map -> height, map -> length);
+	place_exit(map->mlx, map);//map -> map, map -> height, map -> length);
 
 	mlx_key_hook(map->mlx, &key_pressed_function, map);
 	mlx_loop(map->mlx);
