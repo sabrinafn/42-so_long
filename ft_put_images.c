@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/11 16:57:39 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:12:35 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ typedef struct mlx_image
 	bool			enabled;
 	void*			context;
 }	mlx_image_t;
+
+typedef struct s_player
+{
+	mlx_image_t	*value;
+	int		x;
+	int		y;
+}	t_player;
+
+typedef struct s_map
+{
+	char			**map;
+	int				length;
+	int				height;
+	mlx_t			*mlx;
+	t_player		player;
+}	t_map;
 \*******************************/
 
 void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols)
@@ -50,7 +66,7 @@ void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols)
 	}
 }
 
-void	place_player(mlx_t *mlx, char **map, int rows, int cols)
+void	place_player(mlx_t *mlx, t_map *map)//char **map, int rows, int cols)
 {
 	mlx_image_t	*player;
 	int			i;
@@ -58,13 +74,18 @@ void	place_player(mlx_t *mlx, char **map, int rows, int cols)
 
 	player = mlx_texture_to_image(mlx, mlx_load_png("./images/bananacat.png"));
 	i = 0;
-	while (i < rows)
+	while (i < map->height)//rows)
 	{
 		j = 0;
-		while (j < cols)
+		while (j < map->length)//cols)
 		{
-			if (map[i][j] == 'P')
+			if (map->map[i][j] == 'P')
+			{
 				mlx_image_to_window(mlx, player, j * TILE_SIZE, i * TILE_SIZE);
+				map->player.value = player;
+				map->player.x = i;
+				map->player.y = j;
+			}
 			j++;
 		}
 		i++;
