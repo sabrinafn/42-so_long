@@ -32,9 +32,7 @@ int	check_map(t_map *map)
 int	check_ber(char *str)
 {
 	char	*str_found;
-	int		i;
 
-	i = 0;
 	str_found = ft_strrchr(str, '.');
 	if (!str_found)
 		return (0);
