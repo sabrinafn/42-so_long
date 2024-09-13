@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/13 14:05:50 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:43:09 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void	move_right(t_map *map)
 //	move_right
 	//TILE_SIZE * map->length = total_length_size
 	int32_t x_total = (TILE_SIZE * map->length) - 32;
-	if (map->player.value->instances->x + 32 < x_total)
+
+	// adding value to variable
+	int32_t current = map->player.value->instances->x;
+
+	if (current + 32 < x_total)
 		map->player.value->instances->x += 32;
 }
 
@@ -40,7 +44,11 @@ void	move_down(t_map *map)
 //	move_down
 	//TILE_SIZE * map->height = total_length_size
 	int32_t y_total = (TILE_SIZE * map->height) - 32;
-	if (map->player.value->instances->y + 32 < y_total)
+	
+	// adding value to variable
+	int32_t current = map->player.value->instances->y;
+
+	if (current + 32 < y_total)
 	map->player.value->instances->y += 32;
 }
 
