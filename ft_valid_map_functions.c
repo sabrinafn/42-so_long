@@ -17,10 +17,8 @@ t_map	*ft_map_copy(t_map *map)
 	t_map	*map_copy;
 	char	**str;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	str = (char **)malloc(sizeof(char *) * (map -> height + 1));
 	if (!str)
 		return (NULL);
