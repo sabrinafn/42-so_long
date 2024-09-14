@@ -6,11 +6,38 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 13:29:32 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 14:36:44 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+/*
+void	find_and_delete(t_map *map, int y, int x)
+{
+	// loop through map
+	// find which coin image at the position yx 
+	// delete it
+
+	int	i = 0;
+	int j = 0;
+
+	while (i != y)
+	{
+		j = 0;
+		while (j != x)
+		{
+			int current_x = map->images.coins->instances->x / TILE_SIZE;
+			int current_y = map->images.player->instances->y / TILE_SIZE;
+			if (current_y == y && current_x == x)
+			{
+				map->map[]
+			}
+			j++;
+		}
+		i++;
+	}
+
+}*/
 
 int	move_left(t_map *map)
 {
@@ -24,8 +51,8 @@ int	move_left(t_map *map)
 		{
 			map->images.player->instances->x -= 32;
 			map->moves +=1;
-			if (map->map[current_y][current_x - 1] == 'C')
-				printf("coincoincoin\n");
+			//if (map->map[current_y][current_x - 1] == 'C')
+			//	find_and_delete(map, current_y, current_x - 1);
 				//mlx_delete_image(map->mlx, image);
 			return (1);
 		}

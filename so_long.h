@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 13:29:12 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 14:18:32 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 //minilibx
 # include "MLX42/include/MLX42/MLX42.h"
 
+# define TILE_SIZE 32 // each tile on the map will be 32x32 pixels
 
 // STRUCTURES FOR THE ARGS CHECK
 
@@ -32,16 +33,18 @@ typedef struct s_coordinates
 	int		x;
 	int		y;
 }	t_coordinates;
-/*
+
+// STRUCTURES FOR THE MAP WINDOW?
+
 typedef struct s_coins
 {
 	mlx_image_t	*data;
 	void		*next;
-}	t_coins; */
+}	t_coins;
 
 typedef struct s_images
 {
-	mlx_image_t	coin[9999];
+	t_coins		*coins;
 	mlx_image_t	*player;
 	mlx_image_t	*exit;
 }	t_images;
@@ -57,26 +60,18 @@ typedef struct s_map
 	t_images		images;
 }	t_map;
 
-// STRUCTURES FOR THE MAP WINDOW?
-
 typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 }	t_data;
 
-// FUNCTIONS FOR MINILIBX
-
-//# define WINDOW_WIDTH 600
-//# define WINDOW_HEIGHT 1000
-# define TILE_SIZE 32 // each tile on the map will be 32x32 pixels
-/*
 // FT_LINKED_LIST_MANAGER.C	
 t_coins	*create_node(void *data);
 void	add_node_back(t_coins **coin, t_coins *new_node);
 void	free_lst(t_coins *node);
 void	ft_lstclear(t_coins **coin);
-*/
+
 // FT_INIT_WINDOW
 void	init_window(t_map *map);
 
@@ -122,7 +117,7 @@ int		count_line_infd(char *file_name);
 char	**read_map(int fd, int line_count);
 t_map	*init_map(char *file_name);
 
-// MAIN STILL
+// MAIN
 int		is_map_valid(t_map *map);
 int		check_flood_fill(t_map *map);
 void	flood_fill(t_map *map, int x, int y);

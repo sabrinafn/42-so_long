@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 13:28:56 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 14:26:30 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ void	place_coin(mlx_t *mlx, t_map *map)
 	int			j;
 
 	coin = mlx_texture_to_image(mlx, mlx_load_png("./images/coin.png"));
+	//map->images.coins = create_node(coin);
+	if (map->images.coins != NULL)
+		add_node_back(&map->images.coins, create_node(coin));
 	i = 0;
 	while (i < map->height)
 	{
