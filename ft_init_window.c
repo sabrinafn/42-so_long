@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 11:18:50 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 11:30:26 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ void	init_window(t_map *map)
 	// DECLARE DATA AND OPEN WINDOW
 //	mlx_t	*mlx; // declare data struct to hold value from connection with graphycal system
 					// and store window
-	map->mlx = mlx_init(WINDOW_HEIGHT, WINDOW_WIDTH, "so_long", true);
+	int	WINDOW_HEIGHT = map->height * TILE_SIZE;
+	int	WINDOW_LENGTH = map->length * TILE_SIZE;
+	map->mlx = mlx_init(WINDOW_LENGTH, WINDOW_HEIGHT, "so_long", true);
 	if (!map->mlx) // error check
 		printf("error\n"); // free mlx if not possible to open the window
 

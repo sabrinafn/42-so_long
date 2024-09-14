@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/13 12:11:43 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 11:24:43 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef struct s_data
 
 // FUNCTIONS FOR MINILIBX
 
-# define WINDOW_WIDTH 600
-# define WINDOW_HEIGHT 1000
+//# define WINDOW_WIDTH 600
+//# define WINDOW_HEIGHT 1000
 # define TILE_SIZE 32 // each tile on the map will be 32x32 pixels
 
 // FT_INIT_WINDOW
