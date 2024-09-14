@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/13 12:12:35 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 12:18:38 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@ typedef struct mlx_image
 	bool			enabled;
 	void*			context;
 }	mlx_image_t;
-
-typedef struct s_player
-{
-	mlx_image_t	*value;
-	int		x;
-	int		y;
-}	t_player;
 
 typedef struct s_map
 {
@@ -82,9 +75,10 @@ void	place_player(mlx_t *mlx, t_map *map)//char **map, int rows, int cols)
 			if (map->map[i][j] == 'P')
 			{
 				mlx_image_to_window(mlx, player, j * TILE_SIZE, i * TILE_SIZE);
-				map->player.value = player;
-				map->player.x = i;
-				map->player.y = j;
+				map->images.player = player;
+				//map->player.value = player;
+				//map->player.x = i;
+				//map->player.y = j;
 			}
 			j++;
 		}

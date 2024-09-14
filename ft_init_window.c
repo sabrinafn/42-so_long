@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 11:42:55 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 12:17:24 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 int	move_left(t_map *map)
 {
-	int current_x = map->player.value->instances->x / TILE_SIZE;
-	int current_y = map->player.value->instances->y / TILE_SIZE;
+	int current_x = map->images.player->instances->x / TILE_SIZE;
+	int current_y = map->images.player->instances->y / TILE_SIZE;
 
 	if (map->map[current_y][current_x - 1] != '1')
 	{
 		//	move_left
-		if (map->player.value->instances->x - 32 > 0)
+		if (map->images.player->instances->x - 32 > 0)
 		{
-			map->player.value->instances->x -= 32;
+			map->images.player->instances->x -= 32;
 			map->moves +=1;
+			//if (map->map[current_y][current_x] == 'C')
+			//	mlx_delete_image(map->mlx, image?);
 			return (1);
 		}
 	}
@@ -32,8 +34,8 @@ int	move_left(t_map *map)
 
 int	move_right(t_map *map)
 {
-	int current_x = map->player.value->instances->x / TILE_SIZE;
-	int current_y = map->player.value->instances->y / TILE_SIZE;
+	int current_x = map->images.player->instances->x / TILE_SIZE;
+	int current_y = map->images.player->instances->y / TILE_SIZE;
 
 	if (map->map[current_y][current_x + 1] != '1')
 	{
@@ -42,11 +44,11 @@ int	move_right(t_map *map)
 		int32_t x_total = (TILE_SIZE * map->length) - 32;
 	
 		// adding value to variable
-		int32_t current = map->player.value->instances->x;
+		int32_t current = map->images.player->instances->x;
 	
 		if (current + 32 < x_total)
 		{
-			map->player.value->instances->x += 32;
+			map->images.player->instances->x += 32;
 			map->moves +=1;
 			return (1);
 		}
@@ -56,15 +58,15 @@ int	move_right(t_map *map)
 
 int	move_up(t_map *map)
 {
-	int current_x = map->player.value->instances->x / TILE_SIZE;
-	int current_y = map->player.value->instances->y / TILE_SIZE;
+	int current_x = map->images.player->instances->x / TILE_SIZE;
+	int current_y = map->images.player->instances->y / TILE_SIZE;
 
 	if (map->map[current_y - 1][current_x] != '1')
 	{
 		//	move_up
-		if (map->player.value->instances->y - 32 > 0)
+		if (map->images.player->instances->y - 32 > 0)
 		{
-			map->player.value->instances->y -= 32;
+			map->images.player->instances->y -= 32;
 			map->moves +=1;
 			return (1);
 		}
@@ -72,10 +74,11 @@ int	move_up(t_map *map)
 	return (0);
 }
 
+	//map->images.player = player;
 int	move_down(t_map *map)
 {
-	int current_x = map->player.value->instances->x / TILE_SIZE;
-	int current_y = map->player.value->instances->y / TILE_SIZE;
+	int current_x = map->images.player->instances->x / TILE_SIZE;
+	int current_y = map->images.player->instances->y / TILE_SIZE;
 
 	if (map->map[current_y + 1][current_x] != '1')
 	{
@@ -84,15 +87,48 @@ int	move_down(t_map *map)
 		int32_t y_total = (TILE_SIZE * map->height) - 32;
 		
 		// adding value to variable
-		int32_t current = map->player.value->instances->y;
+		int32_t current = map->images.player->instances->y;
 	
 		if (current + 32 < y_total)
 		{
-			map->player.value->instances->y += 32;
+			map->images.player->instances->y += 32;
 			map->moves +=1;
 			return (1);
 		}
 	}
+	return (0);
+}
+
+int	move_player(mlx_key_data_t keydata, t_map *map)
+{
+	//	move_left
+	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT))
+	{
+		if (move_left(map))
+			return (1);
+	}
+	//	move_right
+	if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT))
+	{
+		if (move_right(map))	
+			return (1);
+	}
+	//	move_up
+	if (mlx_is_key_down(map->mlx, MLX_KEY_UP))
+	{
+		if (move_up(map))
+			return (1);
+	}
+	//	move_down
+	if (mlx_is_key_down(map->mlx, MLX_KEY_DOWN))
+	{
+		if (move_down(map))
+			return (1);
+	}
+	// key down: act
+	// key_hook: identify
+//	printf("tecla num: %d\n", keydata.key);
+	(void)keydata;
 	return (0);
 }
 
@@ -109,28 +145,12 @@ void	key_pressed_function(mlx_key_data_t keydata, void *param)
 	//	close window with esc
 	if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(map->mlx);
-	//	move_left
-	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT)
+		|| mlx_is_key_down(map->mlx, MLX_KEY_RIGHT)
+		|| mlx_is_key_down(map->mlx, MLX_KEY_UP)
+		|| mlx_is_key_down(map->mlx, MLX_KEY_DOWN))
 	{
-		if (move_left(map))
-			print_moves(map->moves);
-	}
-	//	move_right
-	if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT))
-	{
-		if (move_right(map))	
-			print_moves(map->moves);
-	}
-	//	move_up
-	if (mlx_is_key_down(map->mlx, MLX_KEY_UP))
-	{
-		if (move_up(map))
-			print_moves(map->moves);
-	}
-	//	move_down
-	if (mlx_is_key_down(map->mlx, MLX_KEY_DOWN))
-	{
-		if (move_down(map))
+		if (move_player(keydata, map))
 			print_moves(map->moves);
 	}
 	

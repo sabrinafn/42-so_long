@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 11:34:53 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 12:18:09 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ typedef struct s_coordinates
 	int		y;
 }	t_coordinates;
 
-typedef struct s_player
+typedef struct s_images
 {
-	mlx_image_t	*value;
-	int		x;
-	int		y;
-}	t_player;
+	mlx_image_t	*player;
+	mlx_image_t	*collectible;
+	mlx_image_t	*exit;
+}	t_images;
 
 typedef struct s_map
 {
@@ -47,7 +47,7 @@ typedef struct s_map
 	int				height;
 	int				moves;
 	mlx_t			*mlx;
-	t_player		player;
+	t_images		images;
 }	t_map;
 
 // STRUCTURES FOR THE MAP WINDOW?
