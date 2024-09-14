@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/13 14:43:09 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 11:18:50 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,66 @@
 
 void	move_left(t_map *map)
 {
-//	move_left
-	if (map->player.value->instances->x - 32 > 0)
-		map->player.value->instances->x -= 32;
+	int current_x = map->player.value->instances->x / TILE_SIZE;
+	int current_y = map->player.value->instances->y / TILE_SIZE;
+
+	if (map->map[current_y][current_x - 1] != '1')
+	{
+		//	move_left
+		if (map->player.value->instances->x - 32 > 0)
+			map->player.value->instances->x -= 32;
+	}
 }
 
 void	move_right(t_map *map)
 {
-//	move_right
-	//TILE_SIZE * map->length = total_length_size
-	int32_t x_total = (TILE_SIZE * map->length) - 32;
+	int current_x = map->player.value->instances->x / TILE_SIZE;
+	int current_y = map->player.value->instances->y / TILE_SIZE;
 
-	// adding value to variable
-	int32_t current = map->player.value->instances->x;
-
-	if (current + 32 < x_total)
-		map->player.value->instances->x += 32;
+	if (map->map[current_y][current_x + 1] != '1')
+	{
+		//	move_right
+		//TILE_SIZE * map->length = total_length_size
+		int32_t x_total = (TILE_SIZE * map->length) - 32;
+	
+		// adding value to variable
+		int32_t current = map->player.value->instances->x;
+	
+		if (current + 32 < x_total)
+			map->player.value->instances->x += 32;
+	}
 }
 
 void	move_up(t_map *map)
 {
-//	move_up
-	if (map->player.value->instances->y - 32 > 0)
-		map->player.value->instances->y -= 32;
+	int current_x = map->player.value->instances->x / TILE_SIZE;
+	int current_y = map->player.value->instances->y / TILE_SIZE;
+
+	if (map->map[current_y - 1][current_x] != '1')
+	{
+		//	move_up
+		if (map->player.value->instances->y - 32 > 0)
+			map->player.value->instances->y -= 32;
+	}
 }
 
 void	move_down(t_map *map)
 {
-//	move_down
-	//TILE_SIZE * map->height = total_length_size
-	int32_t y_total = (TILE_SIZE * map->height) - 32;
-	
-	// adding value to variable
-	int32_t current = map->player.value->instances->y;
+	int current_x = map->player.value->instances->x / TILE_SIZE;
+	int current_y = map->player.value->instances->y / TILE_SIZE;
 
-	if (current + 32 < y_total)
-	map->player.value->instances->y += 32;
+	if (map->map[current_y + 1][current_x] != '1')
+	{
+		//	move_down
+		//TILE_SIZE * map->height = total_length_size
+		int32_t y_total = (TILE_SIZE * map->height) - 32;
+		
+		// adding value to variable
+		int32_t current = map->player.value->instances->y;
+	
+		if (current + 32 < y_total)
+			map->player.value->instances->y += 32;
+	}
 }
 
 void	key_pressed_function(mlx_key_data_t keydata, void *param)
