@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 11:24:43 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 11:34:53 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_map
 	char			**map;
 	int				length;
 	int				height;
+	int				moves;
 	mlx_t			*mlx;
 	t_player		player;
 }	t_map;

@@ -6,13 +6,13 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 11:30:26 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 11:42:55 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	move_left(t_map *map)
+int	move_left(t_map *map)
 {
 	int current_x = map->player.value->instances->x / TILE_SIZE;
 	int current_y = map->player.value->instances->y / TILE_SIZE;
@@ -21,11 +21,16 @@ void	move_left(t_map *map)
 	{
 		//	move_left
 		if (map->player.value->instances->x - 32 > 0)
+		{
 			map->player.value->instances->x -= 32;
+			map->moves +=1;
+			return (1);
+		}
 	}
+	return (0);
 }
 
-void	move_right(t_map *map)
+int	move_right(t_map *map)
 {
 	int current_x = map->player.value->instances->x / TILE_SIZE;
 	int current_y = map->player.value->instances->y / TILE_SIZE;
@@ -40,11 +45,16 @@ void	move_right(t_map *map)
 		int32_t current = map->player.value->instances->x;
 	
 		if (current + 32 < x_total)
+		{
 			map->player.value->instances->x += 32;
+			map->moves +=1;
+			return (1);
+		}
 	}
+	return (0);
 }
 
-void	move_up(t_map *map)
+int	move_up(t_map *map)
 {
 	int current_x = map->player.value->instances->x / TILE_SIZE;
 	int current_y = map->player.value->instances->y / TILE_SIZE;
@@ -53,11 +63,16 @@ void	move_up(t_map *map)
 	{
 		//	move_up
 		if (map->player.value->instances->y - 32 > 0)
+		{
 			map->player.value->instances->y -= 32;
+			map->moves +=1;
+			return (1);
+		}
 	}
+	return (0);
 }
 
-void	move_down(t_map *map)
+int	move_down(t_map *map)
 {
 	int current_x = map->player.value->instances->x / TILE_SIZE;
 	int current_y = map->player.value->instances->y / TILE_SIZE;
@@ -72,8 +87,18 @@ void	move_down(t_map *map)
 		int32_t current = map->player.value->instances->y;
 	
 		if (current + 32 < y_total)
+		{
 			map->player.value->instances->y += 32;
+			map->moves +=1;
+			return (1);
+		}
 	}
+	return (0);
+}
+
+void	print_moves(int	moves)
+{
+	printf("moves: %d\n", moves);
 }
 
 void	key_pressed_function(mlx_key_data_t keydata, void *param)
@@ -86,20 +111,33 @@ void	key_pressed_function(mlx_key_data_t keydata, void *param)
 		mlx_close_window(map->mlx);
 	//	move_left
 	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT))
-		move_left(map);
+	{
+		if (move_left(map))
+			print_moves(map->moves);
+	}
 	//	move_right
 	if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT))
-		move_right(map);
+	{
+		if (move_right(map))	
+			print_moves(map->moves);
+	}
 	//	move_up
 	if (mlx_is_key_down(map->mlx, MLX_KEY_UP))
-		move_up(map);
+	{
+		if (move_up(map))
+			print_moves(map->moves);
+	}
 	//	move_down
 	if (mlx_is_key_down(map->mlx, MLX_KEY_DOWN))
-		move_down(map);
+	{
+		if (move_down(map))
+			print_moves(map->moves);
+	}
 	
 	// key down: act
 	// key_hook: identify
-	printf("tecla num: %d\n", keydata.key);
+//	printf("tecla num: %d\n", keydata.key);
+	(void)keydata;
 }
 
 void	init_window(t_map *map)
