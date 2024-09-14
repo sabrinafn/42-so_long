@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 12:18:38 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 13:28:56 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,19 @@ typedef struct mlx_image
 	void*			context;
 }	mlx_image_t;
 
-typedef struct s_map
+typedef struct s_coins
 {
-	char			**map;
-	int				length;
-	int				height;
-	mlx_t			*mlx;
-	t_player		player;
-}	t_map;
+	mlx_image_t	*item;
+	t_coins		*next;
+}	t_coins;
+
+typedef struct s_images
+{
+	t_coins		*coin;
+	mlx_image_t	*player;
+	mlx_image_t	*exit;
+	//mlx_image_t	*collectible;
+}	t_images;
 \*******************************/
 
 void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols)
@@ -76,9 +81,6 @@ void	place_player(mlx_t *mlx, t_map *map)//char **map, int rows, int cols)
 			{
 				mlx_image_to_window(mlx, player, j * TILE_SIZE, i * TILE_SIZE);
 				map->images.player = player;
-				//map->player.value = player;
-				//map->player.x = i;
-				//map->player.y = j;
 			}
 			j++;
 		}

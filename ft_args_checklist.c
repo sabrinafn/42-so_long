@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/09 19:26:20 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 13:05:06 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,12 @@ int	check_chars(t_map *map)
 		while (map -> map[i][j] != '\n' && map -> map[i][j] != '\0')
 		{
 			c = map -> map[i][j];
-			if (c == 'C' || c == 'E' || c == 'P')
+			if (c == 'C')
+			{
+				char_arr[c] = true;
+				map->coins_amount += 1;
+			}
+			if (c == 'E' || c == 'P')
 				char_arr[c] = true;
 			j++;
 		}

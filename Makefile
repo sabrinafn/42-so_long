@@ -21,7 +21,8 @@ CFILES := main.c \
 	ft_init_map.c \
 	ft_valid_map_functions.c \
 	ft_init_window.c \
-	ft_put_images.c
+	ft_put_images.c \
+#	ft_linked_list_manager.c
 
 OFILES := $(CFILES:.c=.o)
 

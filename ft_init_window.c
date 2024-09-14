@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 12:17:24 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 13:29:32 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ int	move_left(t_map *map)
 		{
 			map->images.player->instances->x -= 32;
 			map->moves +=1;
-			//if (map->map[current_y][current_x] == 'C')
-			//	mlx_delete_image(map->mlx, image?);
+			if (map->map[current_y][current_x - 1] == 'C')
+				printf("coincoincoin\n");
+				//mlx_delete_image(map->mlx, image);
 			return (1);
 		}
 	}
@@ -170,7 +171,6 @@ void	init_window(t_map *map)
 	map->mlx = mlx_init(WINDOW_LENGTH, WINDOW_HEIGHT, "so_long", true);
 	if (!map->mlx) // error check
 		printf("error\n"); // free mlx if not possible to open the window
-
 	// LOAD IMAGES/TEXTURE
 	render_initial_map(map->mlx, map -> map, map -> height, map -> length);
 

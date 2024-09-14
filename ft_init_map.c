@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/13 10:31:49 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/14 13:03:37 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_map	*populate_map_struct(char **map)
 	map_struct -> map = map;
 	map_struct -> length = length - 1;
 	map_struct -> height = height;
+	map_struct -> coins_amount = 0;
 	return (map_struct);
 }
 
