@@ -6,38 +6,29 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 14:36:44 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/15 13:55:45 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-/*
+
+//void	find_and_delete(mlx_image_t *coin, int y, int x)
 void	find_and_delete(t_map *map, int y, int x)
 {
-	// loop through map
-	// find which coin image at the position yx 
-	// delete it
+	int		lst_y;
+	int		lst_x;
+	size_t	i;
 
-	int	i = 0;
-	int j = 0;
-
-	while (i != y)
+	i = 0;
+	while (i < map->images.coins->count)
 	{
-		j = 0;
-		while (j != x)
-		{
-			int current_x = map->images.coins->instances->x / TILE_SIZE;
-			int current_y = map->images.player->instances->y / TILE_SIZE;
-			if (current_y == y && current_x == x)
-			{
-				map->map[]
-			}
-			j++;
-		}
+		lst_y = map->images.coins->instances[i].y / TILE_SIZE;
+		lst_x = map->images.coins->instances[i].x / TILE_SIZE;
+		if (lst_y == y && lst_x == x)
+			map->images.coins->instances[i].enabled = false;
 		i++;
 	}
-
-}*/
+}
 
 int	move_left(t_map *map)
 {
@@ -51,9 +42,8 @@ int	move_left(t_map *map)
 		{
 			map->images.player->instances->x -= 32;
 			map->moves +=1;
-			//if (map->map[current_y][current_x - 1] == 'C')
-			//	find_and_delete(map, current_y, current_x - 1);
-				//mlx_delete_image(map->mlx, image);
+			if (map->map[current_y][current_x - 1] == 'C')
+				find_and_delete(map, current_y, current_x - 1);
 			return (1);
 		}
 	}
@@ -78,6 +68,8 @@ int	move_right(t_map *map)
 		{
 			map->images.player->instances->x += 32;
 			map->moves +=1;
+			if (map->map[current_y][current_x + 1] == 'C')
+				find_and_delete(map, current_y, current_x + 1);
 			return (1);
 		}
 	}
@@ -96,6 +88,8 @@ int	move_up(t_map *map)
 		{
 			map->images.player->instances->y -= 32;
 			map->moves +=1;
+			if (map->map[current_y - 1][current_x] == 'C')
+				find_and_delete(map, current_y - 1, current_x);
 			return (1);
 		}
 	}
@@ -121,6 +115,8 @@ int	move_down(t_map *map)
 		{
 			map->images.player->instances->y += 32;
 			map->moves +=1;
+			if (map->map[current_y + 1][current_x] == 'C')
+				find_and_delete(map, current_y + 1, current_x);
 			return (1);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 14:18:32 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/15 13:08:28 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ typedef struct s_coordinates
 }	t_coordinates;
 
 // STRUCTURES FOR THE MAP WINDOW?
-
+/*
 typedef struct s_coins
 {
 	mlx_image_t			*data;
 	struct s_coins		*next;
 }	t_coins;
-
+*/
 typedef struct s_images
 {
-	t_coins		*coins;
+	mlx_image_t	*coins;
 	mlx_image_t	*player;
 	mlx_image_t	*exit;
 }	t_images;
@@ -65,13 +65,14 @@ typedef struct s_data
 	void	*mlx_ptr;
 	void	*win_ptr;
 }	t_data;
-
+/*
 // FT_LINKED_LIST_MANAGER.C	
 t_coins	*create_node(void *data);
 void	add_node_back(t_coins **coin, t_coins *new_node);
 void	free_lst(t_coins *node);
 void	ft_lstclear(t_coins **coin);
-
+t_coins	*ft_lstlast(t_coins *coin);
+*/
 // FT_INIT_WINDOW
 void	init_window(t_map *map);
 
