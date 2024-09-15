@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/15 13:55:45 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:28:02 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ void	find_and_delete(t_map *map, int y, int x)
 	}
 }
 
+int	all_coins_collected(mlx_image_t *coin)
+{
+	size_t		i;
+
+	i = 0;
+	while (i < coin->count)
+	{
+		if (coin->instances[i].enabled == true)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	move_left(t_map *map)
 {
 	int current_x = map->images.player->instances->x / TILE_SIZE;
@@ -44,6 +58,9 @@ int	move_left(t_map *map)
 			map->moves +=1;
 			if (map->map[current_y][current_x - 1] == 'C')
 				find_and_delete(map, current_y, current_x - 1);
+			if (map->map[current_y][current_x -1] == 'E'
+				&& all_coins_collected(map->images.coins))
+				mlx_close_window(map->mlx);
 			return (1);
 		}
 	}
@@ -70,6 +87,9 @@ int	move_right(t_map *map)
 			map->moves +=1;
 			if (map->map[current_y][current_x + 1] == 'C')
 				find_and_delete(map, current_y, current_x + 1);
+			if (map->map[current_y][current_x + 1] == 'E'
+				&& all_coins_collected(map->images.coins))
+				mlx_close_window(map->mlx);
 			return (1);
 		}
 	}
@@ -90,6 +110,9 @@ int	move_up(t_map *map)
 			map->moves +=1;
 			if (map->map[current_y - 1][current_x] == 'C')
 				find_and_delete(map, current_y - 1, current_x);
+			if (map->map[current_y - 1][current_x] == 'E'
+				&& all_coins_collected(map->images.coins))
+				mlx_close_window(map->mlx);
 			return (1);
 		}
 	}
@@ -117,6 +140,9 @@ int	move_down(t_map *map)
 			map->moves +=1;
 			if (map->map[current_y + 1][current_x] == 'C')
 				find_and_delete(map, current_y + 1, current_x);
+			if (map->map[current_y + 1][current_x] == 'E'
+				&& all_coins_collected(map->images.coins))
+				mlx_close_window(map->mlx);
 			return (1);
 		}
 	}

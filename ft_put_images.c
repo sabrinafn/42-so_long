@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/15 13:36:23 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:20:10 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,10 @@ void	place_exit(mlx_t *mlx, t_map *map)
 		while (j < map->length)
 		{
 			if (map->map[i][j] == 'E')
+			{
 				mlx_image_to_window(mlx, exit, j * TILE_SIZE, i * TILE_SIZE);
+				map->images.exit = exit;
+			}
 			j++;
 		}
 		i++;
