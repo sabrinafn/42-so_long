@@ -6,26 +6,26 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/15 14:28:02 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:44:16 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 //void	find_and_delete(mlx_image_t *coin, int y, int x)
-void	find_and_delete(t_map *map, int y, int x)
+void	find_and_delete(t_game *game, int y, int x)
 {
 	int		lst_y;
 	int		lst_x;
 	size_t	i;
 
 	i = 0;
-	while (i < map->images.coins->count)
+	while (i < game->images.coins->count)
 	{
-		lst_y = map->images.coins->instances[i].y / TILE_SIZE;
-		lst_x = map->images.coins->instances[i].x / TILE_SIZE;
+		lst_y = game->images.coins->instances[i].y / TILE_SIZE;
+		lst_x = game->images.coins->instances[i].x / TILE_SIZE;
 		if (lst_y == y && lst_x == x)
-			map->images.coins->instances[i].enabled = false;
+			game->images.coins->instances[i].enabled = false;
 		i++;
 	}
 }
@@ -44,75 +44,75 @@ int	all_coins_collected(mlx_image_t *coin)
 	return (1);
 }
 
-int	move_left(t_map *map)
+int	move_left(t_game *game)
 {
-	int current_x = map->images.player->instances->x / TILE_SIZE;
-	int current_y = map->images.player->instances->y / TILE_SIZE;
+	int current_x = game->images.player->instances->x / TILE_SIZE;
+	int current_y = game->images.player->instances->y / TILE_SIZE;
 
-	if (map->map[current_y][current_x - 1] != '1')
+	if (game->map[current_y][current_x - 1] != '1')
 	{
 		//	move_left
-		if (map->images.player->instances->x - 32 > 0)
+		if (game->images.player->instances->x - 32 > 0)
 		{
-			map->images.player->instances->x -= 32;
-			map->moves +=1;
-			if (map->map[current_y][current_x - 1] == 'C')
-				find_and_delete(map, current_y, current_x - 1);
-			if (map->map[current_y][current_x -1] == 'E'
-				&& all_coins_collected(map->images.coins))
-				mlx_close_window(map->mlx);
+			game->images.player->instances->x -= 32;
+			game->moves +=1;
+			if (game->map[current_y][current_x - 1] == 'C')
+				find_and_delete(game, current_y, current_x - 1);
+			if (game->map[current_y][current_x -1] == 'E'
+				&& all_coins_collected(game->images.coins))
+				mlx_close_window(game->mlx);
 			return (1);
 		}
 	}
 	return (0);
 }
 
-int	move_right(t_map *map)
+int	move_right(t_game *game)
 {
-	int current_x = map->images.player->instances->x / TILE_SIZE;
-	int current_y = map->images.player->instances->y / TILE_SIZE;
+	int current_x = game->images.player->instances->x / TILE_SIZE;
+	int current_y = game->images.player->instances->y / TILE_SIZE;
 
-	if (map->map[current_y][current_x + 1] != '1')
+	if (game->map[current_y][current_x + 1] != '1')
 	{
 		//	move_right
 		//TILE_SIZE * map->length = total_length_size
-		int32_t x_total = (TILE_SIZE * map->length) - 32;
+		int32_t x_total = (TILE_SIZE * game->length) - 32;
 	
 		// adding value to variable
-		int32_t current = map->images.player->instances->x;
+		int32_t current = game->images.player->instances->x;
 	
 		if (current + 32 < x_total)
 		{
-			map->images.player->instances->x += 32;
-			map->moves +=1;
-			if (map->map[current_y][current_x + 1] == 'C')
-				find_and_delete(map, current_y, current_x + 1);
-			if (map->map[current_y][current_x + 1] == 'E'
-				&& all_coins_collected(map->images.coins))
-				mlx_close_window(map->mlx);
+			game->images.player->instances->x += 32;
+			game->moves +=1;
+			if (game->map[current_y][current_x + 1] == 'C')
+				find_and_delete(game, current_y, current_x + 1);
+			if (game->map[current_y][current_x + 1] == 'E'
+				&& all_coins_collected(game->images.coins))
+				mlx_close_window(game->mlx);
 			return (1);
 		}
 	}
 	return (0);
 }
 
-int	move_up(t_map *map)
+int	move_up(t_game *game)
 {
-	int current_x = map->images.player->instances->x / TILE_SIZE;
-	int current_y = map->images.player->instances->y / TILE_SIZE;
+	int current_x = game->images.player->instances->x / TILE_SIZE;
+	int current_y = game->images.player->instances->y / TILE_SIZE;
 
-	if (map->map[current_y - 1][current_x] != '1')
+	if (game->map[current_y - 1][current_x] != '1')
 	{
 		//	move_up
-		if (map->images.player->instances->y - 32 > 0)
+		if (game->images.player->instances->y - 32 > 0)
 		{
-			map->images.player->instances->y -= 32;
-			map->moves +=1;
-			if (map->map[current_y - 1][current_x] == 'C')
-				find_and_delete(map, current_y - 1, current_x);
-			if (map->map[current_y - 1][current_x] == 'E'
-				&& all_coins_collected(map->images.coins))
-				mlx_close_window(map->mlx);
+			game->images.player->instances->y -= 32;
+			game->moves +=1;
+			if (game->map[current_y - 1][current_x] == 'C')
+				find_and_delete(game, current_y - 1, current_x);
+			if (game->map[current_y - 1][current_x] == 'E'
+				&& all_coins_collected(game->images.coins))
+				mlx_close_window(game->mlx);
 			return (1);
 		}
 	}
@@ -120,59 +120,59 @@ int	move_up(t_map *map)
 }
 
 	//map->images.player = player;
-int	move_down(t_map *map)
+int	move_down(t_game *game)
 {
-	int current_x = map->images.player->instances->x / TILE_SIZE;
-	int current_y = map->images.player->instances->y / TILE_SIZE;
+	int current_x = game->images.player->instances->x / TILE_SIZE;
+	int current_y = game->images.player->instances->y / TILE_SIZE;
 
-	if (map->map[current_y + 1][current_x] != '1')
+	if (game->map[current_y + 1][current_x] != '1')
 	{
 		//	move_down
 		//TILE_SIZE * map->height = total_length_size
-		int32_t y_total = (TILE_SIZE * map->height) - 32;
+		int32_t y_total = (TILE_SIZE * game->height) - 32;
 		
 		// adding value to variable
-		int32_t current = map->images.player->instances->y;
+		int32_t current = game->images.player->instances->y;
 	
 		if (current + 32 < y_total)
 		{
-			map->images.player->instances->y += 32;
-			map->moves +=1;
-			if (map->map[current_y + 1][current_x] == 'C')
-				find_and_delete(map, current_y + 1, current_x);
-			if (map->map[current_y + 1][current_x] == 'E'
-				&& all_coins_collected(map->images.coins))
-				mlx_close_window(map->mlx);
+			game->images.player->instances->y += 32;
+			game->moves +=1;
+			if (game->map[current_y + 1][current_x] == 'C')
+				find_and_delete(game, current_y + 1, current_x);
+			if (game->map[current_y + 1][current_x] == 'E'
+				&& all_coins_collected(game->images.coins))
+				mlx_close_window(game->mlx);
 			return (1);
 		}
 	}
 	return (0);
 }
 
-int	move_player(mlx_key_data_t keydata, t_map *map)
+int	move_player(mlx_key_data_t keydata, t_game *game)
 {
 	//	move_left
-	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
 	{
-		if (move_left(map))
+		if (move_left(game))
 			return (1);
 	}
 	//	move_right
-	if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 	{
-		if (move_right(map))	
+		if (move_right(game))	
 			return (1);
 	}
 	//	move_up
-	if (mlx_is_key_down(map->mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_UP))
 	{
-		if (move_up(map))
+		if (move_up(game))
 			return (1);
 	}
 	//	move_down
-	if (mlx_is_key_down(map->mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
 	{
-		if (move_down(map))
+		if (move_down(game))
 			return (1);
 	}
 	// key down: act
@@ -189,19 +189,19 @@ void	print_moves(int	moves)
 
 void	key_pressed_function(mlx_key_data_t keydata, void *param)
 {
-	t_map	*map;
+	t_game	*game;
 
-	map = param;
+	game = param;
 	//	close window with esc
-	if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(map->mlx);
-	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT)
-		|| mlx_is_key_down(map->mlx, MLX_KEY_RIGHT)
-		|| mlx_is_key_down(map->mlx, MLX_KEY_UP)
-		|| mlx_is_key_down(map->mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(game->mlx);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT)
+		|| mlx_is_key_down(game->mlx, MLX_KEY_RIGHT)
+		|| mlx_is_key_down(game->mlx, MLX_KEY_UP)
+		|| mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
 	{
 		if (move_player(keydata, map))
-			print_moves(map->moves);
+			print_moves(game->moves);
 	}
 	
 	// key down: act
@@ -210,24 +210,21 @@ void	key_pressed_function(mlx_key_data_t keydata, void *param)
 	(void)keydata;
 }
 
-void	init_window(t_map *map)
+void	init_window(t_game *game)
 {
-	// DECLARE DATA AND OPEN WINDOW
-//	mlx_t	*mlx; // declare data struct to hold value from connection with graphycal system
-					// and store window
-	int	WINDOW_HEIGHT = map->height * TILE_SIZE;
-	int	WINDOW_LENGTH = map->length * TILE_SIZE;
-	map->mlx = mlx_init(WINDOW_LENGTH, WINDOW_HEIGHT, "so_long", true);
-	if (!map->mlx) // error check
+	int	WINDOW_HEIGHT = game->height * TILE_SIZE;
+	int	WINDOW_LENGTH = game->length * TILE_SIZE;
+	game->mlx = mlx_init(WINDOW_LENGTH, WINDOW_HEIGHT, "so_long", true);
+	if (!game->mlx) // error check
 		printf("error\n"); // free mlx if not possible to open the window
 	// LOAD IMAGES/TEXTURE
-	render_initial_map(map->mlx, map -> map, map -> height, map -> length);
+	render_initial_map(game->mlx, game -> map, game -> height, game -> length);
 
-	place_player(map->mlx, map);//map -> map, map -> height, map -> length);
-	place_coin(map->mlx, map);//map -> map, map -> height, map -> length);
-	place_exit(map->mlx, map);//map -> map, map -> height, map -> length);
+	place_player(game->mlx, game);//map -> map, map -> height, map -> length);
+	place_coin(game->mlx, game);//map -> map, map -> height, map -> length);
+	place_exit(game->mlx, game);//map -> map, map -> height, map -> length);
 
-	mlx_key_hook(map->mlx, &key_pressed_function, map);
-	mlx_loop(map->mlx);
-	mlx_terminate(map->mlx); // mlx_end_loop
+	mlx_key_hook(game->mlx, &key_pressed_function, game);
+	mlx_loop(game->mlx);
+	mlx_terminate(game->mlx); // mlx_end_loop
 }

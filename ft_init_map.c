@@ -6,30 +6,29 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/14 13:03:37 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:52:22 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_map	*populate_map_struct(char **map)
+t_game	*populate_map_struct(char **map)
 {
-	t_map	*map_struct;
+	t_game	*game;
 	int		height;
 	int		length;
 
-	map_struct = (t_map *)malloc(sizeof(t_map));
-	if (!map_struct)
+	game = (t_game *)malloc(sizeof(t_game));
+	if (!game)
 		return (NULL);
 	length = ft_strlen(map[0]);
 	height = 0;
 	while (map[height])
 		height++;
-	map_struct -> map = map;
-	map_struct -> length = length - 1;
-	map_struct -> height = height;
-	map_struct -> coins_amount = 0;
-	return (map_struct);
+	game->map = map;
+	game->length = length - 1;
+	game->height = height;
+	return (game);
 }
 
 int	count_line_infd(char *file_name)
@@ -75,11 +74,11 @@ char	**read_map(int fd, int line_count)
 	return (map);
 }
 
-t_map	*init_map(char *file_name)
+t_game	*init_map(char *file_name)
 {
 	int			fd;
 	int			count;
-	t_map		*map_struct;
+	t_game		*game;
 	char		**map_array;
 
 	fd = open(file_name, O_RDONLY);
@@ -90,8 +89,8 @@ t_map	*init_map(char *file_name)
 	close(fd);
 	if (!map_array)
 		return (NULL);
-	map_struct = populate_map_struct(map_array);
-	if (!map_struct)
+	game = populate_map_struct(map_array);
+	if (!game)
 		return (NULL);
-	return (map_struct);
+	return (game);
 }

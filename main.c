@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/10 10:55:14 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:33:41 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int ac, char **av)
 {
-	t_map	*map;
+	t_game	*game;
 
 	if (ac > 1)
 	{
@@ -23,17 +23,17 @@ int	main(int ac, char **av)
 			printf("not a ber file\n");
 			return (0);
 		}
-		map = init_map(av[1]);
-		if (map)
+		game = init_map(av[1]);
+		if (game)
 		{
-			if (check_map(map))
+			if (check_map(game))
 			{
 				printf("check_map OK\n");
-				init_window(map);
+				init_window(game);
 			}			
 			else
 				printf("check_map KO\n");
-			free(map);
+			free(game);
 		}
 		else
 			printf("ERROR\n");

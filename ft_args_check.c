@@ -6,25 +6,25 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/09 19:46:38 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:47:59 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	check_map(t_map *map)
+int	check_map(t_game *game)
 {
-	if (!is_rectangular(map))
+	if (!is_rectangular(game))
 		return (0);
-	if (!is_wall(map))
+	if (!is_wall(game))
 		return (0);
-	if (!is_invalid_char(map))
+	if (!is_invalid_char(game))
 		return (0);
-	if (!check_chars(map))
+	if (!check_chars(game))
 		return (0);
-	if (!duplicate_exit_or_start(map))
+	if (!duplicate_exit_or_start(game))
 		return (0);
-	if (!is_map_valid(map))
+	if (!is_map_valid(game))
 		return (0);
 	return (1);
 }

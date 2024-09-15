@@ -6,25 +6,25 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/13 10:43:34 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:55:11 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_map	*ft_map_copy(t_map *map)
+t_game	*ft_map_copy(t_game *game)
 {
-	t_map	*map_copy;
+	t_game	*map_copy;
 	char	**str;
 	int		i;
 
 	i = 0;
-	str = (char **)malloc(sizeof(char *) * (map -> height + 1));
+	str = (char **)malloc(sizeof(char *) * (game->height + 1));
 	if (!str)
 		return (NULL);
-	while (i < map -> height)
+	while (i < game->height)
 	{
-		str[i] = ft_strdup(map -> map[i]);
+		str[i] = ft_strdup(game->map[i]);
 		i++;
 	}
 	str[i] = NULL;
@@ -45,7 +45,7 @@ t_coordinates	*populate_coord(char p, int x, int y)
 	return (coord);
 }
 
-t_coordinates	*find_start_pos(t_map *map)
+t_coordinates	*find_start_pos(t_game *game)
 {
 	t_coordinates	*p_pos;
 	int				i;
@@ -53,14 +53,14 @@ t_coordinates	*find_start_pos(t_map *map)
 
 	i = 0;
 	j = 0;
-	while (map -> map[i])
+	while (game->map[i])
 	{
 		j = 0;
-		while (map -> map[i][j] != '\n' && map -> map[i][j] != '\0')
+		while (game->map[i][j] != '\n' && map -> map[i][j] != '\0')
 		{
-			if (map -> map[i][j] == 'P')
+			if (game->map[i][j] == 'P')
 			{
-				p_pos = populate_coord(map -> map[i][j], j, i);
+				p_pos = populate_coord(game->map[i][j], j, i);
 				return (p_pos);
 			}
 			j++;
@@ -70,18 +70,18 @@ t_coordinates	*find_start_pos(t_map *map)
 	return (NULL);
 }
 
-void	flood_fill(t_map *map, int x, int y)
+void	flood_fill(t_game *game, int x, int y)
 {
-	if (map -> map[y][x] == '1')
+	if (game -> map[y][x] == '1')
 		return ;
-	map -> map[y][x] = '1';
-	flood_fill(map, x - 1, y);
-	flood_fill(map, x, y - 1);
-	flood_fill(map, x + 1, y);
-	flood_fill(map, x, y + 1);
+	game -> map[y][x] = '1';
+	flood_fill(game, x - 1, y);
+	flood_fill(game, x, y - 1);
+	flood_fill(game, x + 1, y);
+	flood_fill(game, x, y + 1);
 }
 
-int	check_flood_fill(t_map *map)
+int	check_flood_fill(t_game *game)
 {
 	int		i;
 	int		j;
