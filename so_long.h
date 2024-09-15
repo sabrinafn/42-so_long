@@ -38,8 +38,8 @@ typedef struct s_coordinates
 
 typedef struct s_coins
 {
-	mlx_image_t	*data;
-	void		*next;
+	mlx_image_t			*data;
+	struct s_coins		*next;
 }	t_coins;
 
 typedef struct s_images

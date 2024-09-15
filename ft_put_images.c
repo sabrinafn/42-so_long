@@ -26,8 +26,8 @@ typedef struct mlx_image
 
 typedef struct s_coins
 {
-	mlx_image_t	*item;
-	t_coins		*next;
+	mlx_image_t			*data;
+	struct s_coins		*next;
 }	t_coins;
 
 typedef struct s_images
