@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:43:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/09 14:30:22 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:14:32 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,16 @@ void	*ft_memset(void *dest, int c, size_t count)
 		i++;
 	}
 	return (dest);
+}
+
+void	ft_putstr_fd(char *str, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(fd, &str[i], 1);
+		i++;
+	}
 }

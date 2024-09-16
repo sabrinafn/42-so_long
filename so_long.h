@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/16 14:06:09 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:14:52 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols);
 char	*ft_strrchr(const char *str, int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memset(void *dest, int c, size_t count);
+void	ft_putstr(char *str, int fd);
 
 // FT_ARGS_CHECKLIST.C
 int		is_invalid_char(t_game *game);

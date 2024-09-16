@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/16 10:32:45 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:56:01 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,15 @@ int	check_flood_fill(t_game *game)
 {
 	int		i;
 	int		j;
-	char	*valid_char;
 
 	i = 0;
 	j = 0;
-	valid_char = "CEP";
 	while (game -> map[i] != NULL)
 	{
 		j = 0;
 		while (game -> map[i][j] != '\n' && game -> map[i][j] != '\0')
 		{
-			if (ft_strrchr(valid_char, game -> map[i][j]))
+			if (ft_strrchr("CEP", game -> map[i][j]))
 				return (0);
 			j++;
 		}
@@ -118,9 +116,10 @@ int	is_map_valid(t_game *game)
 	copy = ft_map_copy(game);
 	if (!copy)
 		return (0);
-	player = find_start_pos(copy);
-	flood_fill(copy, player -> x, player -> y);
-	res = check_flood_fill(copy);
+	player = find_start_pos(copy); // only send the str + int i and int j to pass to floodfill
+	flood_fill(copy, player->x, player->y); // maybe call floodfill in another function
+	// that call findstartpos as well. the function would return the value
+	res = check_flood_fill(copy); 
 	while (copy -> map[j])
 	{
 		free(copy -> map[j]);

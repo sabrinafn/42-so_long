@@ -22,7 +22,6 @@ CFILES := main.c \
 	ft_valid_map_functions.c \
 	ft_init_window.c \
 	ft_put_images.c \
-#	ft_linked_list_manager.c
 
 OFILES := $(CFILES:.c=.o)
 
@@ -30,7 +29,7 @@ OFILES := $(CFILES:.c=.o)
 	$(CC) $(FLAGS) -c $< -o $@ $(INCLUDES)
 
 $(NAME): $(OFILES)
-	$(CC) $(FLAGS) $^ -o $@ $(MLX_FLAGS)
+	$(CC) $(FLAGS) $^ $(MLX_FLAGS) -o $@
 
 libmlx:
 	@cmake $(MLXI) -B $(MLXI)/build && make -C $(MLXI)/build -j4
@@ -45,4 +44,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+v:
+	 valgrind --suppressions=ft_supress_mlx.txt --leak-check=full --show-leak-kinds=all ./so_long map.ber
+
+.PHONY: all clean fclean re v

@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/15 14:33:41 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:37:21 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 	{
 		if (!check_ber(av[1]))
 		{
-			printf("not a ber file\n");
+			//ft_putstr("not a ber file\n", 2);
 			return (0);
 		}
 		game = init_map(av[1]);
@@ -28,11 +28,11 @@ int	main(int ac, char **av)
 		{
 			if (check_map(game))
 			{
-				printf("check_map OK\n");
+				//ft_putstr("check_map OK\n", 1);
 				init_window(game);
 			}			
-			else
-				printf("check_map KO\n");
+//			else
+				//ft_putstr("check_map KO\n", 2);
 			int i = 0;
 			while (game->map[i])
 			{
@@ -45,10 +45,10 @@ int	main(int ac, char **av)
 			free(game);
 			printf("[  FREE: t_game struct] main.c\n");
 		}
-		else
-			printf("Error\n");
+//		else
+			//ft_putstr("Error\n", 2);
 	}
-	else
-		printf("Error\n");
+//	else
+	//	ft_putstr("Error\n", 2);
 	return (0);
 }
