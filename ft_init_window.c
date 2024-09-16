@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/16 13:35:05 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:01:00 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	move_left(t_game *game)
 	if (game->map[current_y][current_x - 1] != '1')
 	{
 		//	move_left
-		if (game->images.player->instances->x - 32 > 0)
+		if (game->images.player->instances->x - TILE_SIZE > 0)
 		{
-			game->images.player->instances->x -= 32;
+			game->images.player->instances->x -= TILE_SIZE;
 			game->moves +=1;
 			if (game->map[current_y][current_x - 1] == 'C')
 				find_and_delete(game, current_y, current_x - 1);
@@ -62,10 +62,7 @@ int	move_left(t_game *game)
 				&& game->images.exit->instances->enabled == true)
 				mlx_close_window(game->mlx);
 			if (all_coins_collected(game->images.coins))
-			{
 				game->images.exit->instances->enabled = true;
-				printf("*********\n");	
-			}	
 			return (1);
 		}
 	}
@@ -81,14 +78,14 @@ int	move_right(t_game *game)
 	{
 		//	move_right
 		//TILE_SIZE * map->length = total_length_size
-		int32_t x_total = (TILE_SIZE * game->length) - 32;
+		int32_t x_total = (TILE_SIZE * game->length) - TILE_SIZE;
 	
 		// adding value to variable
 		int32_t current = game->images.player->instances->x;
 	
-		if (current + 32 < x_total)
+		if (current + TILE_SIZE < x_total)
 		{
-			game->images.player->instances->x += 32;
+			game->images.player->instances->x += TILE_SIZE;
 			game->moves +=1;
 			if (game->map[current_y][current_x + 1] == 'C')
 				find_and_delete(game, current_y, current_x + 1);
@@ -112,9 +109,9 @@ int	move_up(t_game *game)
 	if (game->map[current_y - 1][current_x] != '1')
 	{
 		//	move_up
-		if (game->images.player->instances->y - 32 > 0)
+		if (game->images.player->instances->y - TILE_SIZE > 0)
 		{
-			game->images.player->instances->y -= 32;
+			game->images.player->instances->y -= TILE_SIZE;
 			game->moves +=1;
 			if (game->map[current_y - 1][current_x] == 'C')
 				find_and_delete(game, current_y - 1, current_x);
@@ -123,10 +120,7 @@ int	move_up(t_game *game)
 				&& game->images.exit->instances->enabled == true)
 				mlx_close_window(game->mlx);
 			if (all_coins_collected(game->images.coins))
-			{
 				game->images.exit->instances->enabled = true;
-				printf("*********\n");	
-			}
 			return (1);
 		}
 	}
@@ -143,14 +137,14 @@ int	move_down(t_game *game)
 	{
 		//	move_down
 		//TILE_SIZE * map->height = total_length_size
-		int32_t y_total = (TILE_SIZE * game->height) - 32;
+		int32_t y_total = (TILE_SIZE * game->height) - TILE_SIZE;
 		
 		// adding value to variable
 		int32_t current = game->images.player->instances->y;
 	
-		if (current + 32 < y_total)
+		if (current + TILE_SIZE < y_total)
 		{
-			game->images.player->instances->y += 32;
+			game->images.player->instances->y += TILE_SIZE;
 			game->moves +=1;
 			if (game->map[current_y + 1][current_x] == 'C')
 				find_and_delete(game, current_y + 1, current_x);

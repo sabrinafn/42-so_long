@@ -6,12 +6,12 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/15 14:47:21 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:06:09 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
-#define SO_LONG_H
+# define SO_LONG_H
 
 //standard libraries
 # include <unistd.h>
@@ -42,16 +42,6 @@ typedef struct s_images
 	mlx_image_t	*player;
 	mlx_image_t	*exit;
 }	t_images;
-/*
-typedef struct s_map
-{
-	char			**map;
-	int				length;
-	int				height;
-	int				moves;
-	mlx_t			*mlx;
-	t_images		images;
-}	t_map;*/
 
 typedef struct s_game
 {
@@ -63,6 +53,20 @@ typedef struct s_game
 	t_images		images;
 }	t_game;
 
+/***GET_NEXT_LINE******/
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+char	*get_next_line(int fd);
+size_t	ft_strlen(const char *str);
+char	*ft_strdup(const char *src);
+char	*ft_strchr(const char *str, int c);
+char	*ft_strjoin(char const *s1, char const *s2);
+
+/*********************/
+
 // FT_INIT_WINDOW
 void	init_window(t_game *game);
 
@@ -71,20 +75,6 @@ void	place_exit(mlx_t *mlx, t_game *game);//char **map, int rows, int cols);
 void	place_coin(mlx_t *mlx, t_game *game);//char **map, int rows, int cols);
 void	place_player(mlx_t *mlx, t_game *game);//har **map, int rows, int cols);
 void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols);
-
-/***GET_NEXT_LINE******/
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
-
-char		*get_next_line(int fd);
-size_t		ft_strlen(const char *str);
-char		*ft_strdup(const char *src);
-char		*ft_strchr(const char *str, int c);
-char		*ft_strjoin(char const *s1, char const *s2);
-
-/*********************/
 
 // FT_UTILS.C
 char	*ft_strrchr(const char *str, int c);
@@ -115,6 +105,5 @@ void	flood_fill(t_game *game, int x, int y);
 t_coordinates	*find_start_pos(t_game *game);
 t_coordinates	*populate_coord(char p, int x, int y);
 t_game			*ft_map_copy(t_game *game);
-
 
 #endif
