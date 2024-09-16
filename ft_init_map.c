@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/15 14:52:22 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:36:12 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_game	*populate_map_struct(char **map)
 	game = (t_game *)malloc(sizeof(t_game));
 	if (!game)
 		return (NULL);
+	printf("[MALLOC: t_game struct] ft_init_map.c\n");
 	length = ft_strlen(map[0]);
 	height = 0;
 	while (map[height])
@@ -35,6 +36,7 @@ int	count_line_infd(char *file_name)
 {
 	int			i;
 	int			fd;
+	char		*temp;
 
 	i = 0;
 	fd = open(file_name, O_RDONLY);
@@ -42,8 +44,12 @@ int	count_line_infd(char *file_name)
 		return (-1);
 	while (1)
 	{
-		if (!get_next_line(fd))
+		temp = get_next_line(fd);
+		if (!temp)
 			break ;
+		printf("[MALLOC: GNL line count] ft_init_map.c\n");
+		free(temp);
+		printf("[  FREE: GNL line count] ft_init_map.c\n");
 		i++;
 	}
 	close(fd);
@@ -60,6 +66,7 @@ char	**read_map(int fd, int line_count)
 	map = (char **)malloc(sizeof(char *) * (line_count + 1));
 	if (!map)
 		return (NULL);
+	printf("[MALLOC: char ** for map] ft_init_map.c\n");
 	while (1)
 	{
 		line_gnl = get_next_line(fd);
@@ -69,6 +76,7 @@ char	**read_map(int fd, int line_count)
 		i++;
 	}
 	map[i] = NULL;
+	printf("[MALLOC: GNL store line] ft_init_map.c\n");
 	if (map[0] == NULL)
 		return (NULL);
 	return (map);

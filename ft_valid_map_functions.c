@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/15 14:55:11 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:32:45 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ t_game	*ft_map_copy(t_game *game)
 	str = (char **)malloc(sizeof(char *) * (game->height + 1));
 	if (!str)
 		return (NULL);
+	printf("[MALLOC: char ** copy of original char **] ft_valid_map_functions.c\n");
 	while (i < game->height)
 	{
 		str[i] = ft_strdup(game->map[i]);
 		i++;
 	}
 	str[i] = NULL;
+	printf("[MALLOC: char * copy of lines] ft_valid_map_functions.c\n");
 	map_copy = populate_map_struct(str);
 	return (map_copy);
 }
@@ -39,6 +41,7 @@ t_coordinates	*populate_coord(char p, int x, int y)
 	coord = malloc(sizeof(t_coordinates));
 	if (!coord)
 		return (NULL);
+	printf("[MALLOC: t_coordinates *] ft_valid_map_functions.c\n");
 	coord -> value = p;
 	coord -> x = x;
 	coord -> y = y;
@@ -56,7 +59,7 @@ t_coordinates	*find_start_pos(t_game *game)
 	while (game->map[i])
 	{
 		j = 0;
-		while (game->map[i][j] != '\n' && map -> map[i][j] != '\0')
+		while (game->map[i][j] != '\n' && game -> map[i][j] != '\0')
 		{
 			if (game->map[i][j] == 'P')
 			{
@@ -90,12 +93,12 @@ int	check_flood_fill(t_game *game)
 	i = 0;
 	j = 0;
 	valid_char = "CEP";
-	while (map -> map[i] != NULL)
+	while (game -> map[i] != NULL)
 	{
 		j = 0;
-		while (map -> map[i][j] != '\n' && map -> map[i][j] != '\0')
+		while (game -> map[i][j] != '\n' && game -> map[i][j] != '\0')
 		{
-			if (ft_strrchr(valid_char, map -> map[i][j]))
+			if (ft_strrchr(valid_char, game -> map[i][j]))
 				return (0);
 			j++;
 		}
@@ -104,15 +107,15 @@ int	check_flood_fill(t_game *game)
 	return (1);
 }
 
-int	is_map_valid(t_map *map)
+int	is_map_valid(t_game *game)
 {
-	t_map			*copy;
+	t_game			*copy;
 	t_coordinates	*player;
 	int				res;
 	int				j;
 
 	j = 0;
-	copy = ft_map_copy(map);
+	copy = ft_map_copy(game);
 	if (!copy)
 		return (0);
 	player = find_start_pos(copy);
@@ -123,9 +126,12 @@ int	is_map_valid(t_map *map)
 		free(copy -> map[j]);
 		j++;
 	}
-	printf("map in struct was freed\n");
+	printf("[  FREE: char * copy of lines] ft_valid_map_functions.c\n");
+	printf("[  FREE: char ** copy of original char **] ft_valid_map_functions.c\n");
+	free(copy->map);
+	printf("[  FREE: t_game struct] ft_init_map.c\n");
 	free(copy);
-	printf("struct was freed\n");
+	printf("[  FREE: t_coordinates *] ft_valid_map_functions.c\n");
 	free(player);
 	if (!res)
 		return (0);

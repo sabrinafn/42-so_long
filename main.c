@@ -33,10 +33,20 @@ int	main(int ac, char **av)
 			}			
 			else
 				printf("check_map KO\n");
+			int i = 0;
+			while (game->map[i])
+			{
+				free(game->map[i]);
+				i++;
+			}
+			printf("[  FREE: GNL store line] main.c\n");
+			free(game->map);
+			printf("[  FREE: char ** for map] main.c\n");
 			free(game);
+			printf("[  FREE: t_game struct] main.c\n");
 		}
 		else
-			printf("ERROR\n");
+			printf("Error\n");
 	}
 	else
 		printf("Error\n");

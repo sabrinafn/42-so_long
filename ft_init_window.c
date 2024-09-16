@@ -6,13 +6,12 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/15 14:44:16 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:35:05 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-//void	find_and_delete(mlx_image_t *coin, int y, int x)
 void	find_and_delete(t_game *game, int y, int x)
 {
 	int		lst_y;
@@ -59,8 +58,14 @@ int	move_left(t_game *game)
 			if (game->map[current_y][current_x - 1] == 'C')
 				find_and_delete(game, current_y, current_x - 1);
 			if (game->map[current_y][current_x -1] == 'E'
-				&& all_coins_collected(game->images.coins))
+				&& all_coins_collected(game->images.coins)
+				&& game->images.exit->instances->enabled == true)
 				mlx_close_window(game->mlx);
+			if (all_coins_collected(game->images.coins))
+			{
+				game->images.exit->instances->enabled = true;
+				printf("*********\n");	
+			}	
 			return (1);
 		}
 	}
@@ -88,8 +93,11 @@ int	move_right(t_game *game)
 			if (game->map[current_y][current_x + 1] == 'C')
 				find_and_delete(game, current_y, current_x + 1);
 			if (game->map[current_y][current_x + 1] == 'E'
-				&& all_coins_collected(game->images.coins))
+				&& all_coins_collected(game->images.coins)
+				&& game->images.exit->instances->enabled == true)
 				mlx_close_window(game->mlx);
+			if (all_coins_collected(game->images.coins))
+				game->images.exit->instances->enabled = true;
 			return (1);
 		}
 	}
@@ -111,8 +119,14 @@ int	move_up(t_game *game)
 			if (game->map[current_y - 1][current_x] == 'C')
 				find_and_delete(game, current_y - 1, current_x);
 			if (game->map[current_y - 1][current_x] == 'E'
-				&& all_coins_collected(game->images.coins))
+				&& all_coins_collected(game->images.coins)
+				&& game->images.exit->instances->enabled == true)
 				mlx_close_window(game->mlx);
+			if (all_coins_collected(game->images.coins))
+			{
+				game->images.exit->instances->enabled = true;
+				printf("*********\n");	
+			}
 			return (1);
 		}
 	}
@@ -140,8 +154,11 @@ int	move_down(t_game *game)
 			game->moves +=1;
 			if (game->map[current_y + 1][current_x] == 'C')
 				find_and_delete(game, current_y + 1, current_x);
+			if (all_coins_collected(game->images.coins))
+				game->images.exit->instances->enabled = true;
 			if (game->map[current_y + 1][current_x] == 'E'
-				&& all_coins_collected(game->images.coins))
+				&& all_coins_collected(game->images.coins)
+				&& game->images.exit->instances->enabled == true)
 				mlx_close_window(game->mlx);
 			return (1);
 		}
@@ -200,7 +217,7 @@ void	key_pressed_function(mlx_key_data_t keydata, void *param)
 		|| mlx_is_key_down(game->mlx, MLX_KEY_UP)
 		|| mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
 	{
-		if (move_player(keydata, map))
+		if (move_player(keydata, game))
 			print_moves(game->moves);
 	}
 	

@@ -6,38 +6,11 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/15 14:20:10 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:33:51 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-/*******************************\
-typedef struct mlx_image
-{
-	const uint32_t	width;
-	const uint32_t	height;
-	uint8_t*		pixels;
-	mlx_instance_t*	instances;
-	size_t			count;
-	bool			enabled;
-	void*			context;
-}	mlx_image_t;
-
-typedef struct s_coins
-{
-	mlx_image_t			*data;
-	struct s_coins		*next;
-}	t_coins;
-
-typedef struct s_images
-{
-	t_coins		*coin;
-	mlx_image_t	*player;
-	mlx_image_t	*exit;
-	//mlx_image_t	*collectible;
-}	t_images;
-\*******************************/
 
 void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols)
 {
@@ -64,7 +37,7 @@ void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols)
 	}
 }
 
-void	place_player(mlx_t *mlx, t_map *map)//char **map, int rows, int cols)
+void	place_player(mlx_t *mlx, t_game *game)
 {
 	mlx_image_t	*player;
 	int			i;
@@ -72,15 +45,15 @@ void	place_player(mlx_t *mlx, t_map *map)//char **map, int rows, int cols)
 
 	player = mlx_texture_to_image(mlx, mlx_load_png("./images/bananacat.png"));
 	i = 0;
-	while (i < map->height) //rows)
+	while (i < game->height)
 	{
 		j = 0;
-		while (j < map->length) //cols)
+		while (j < game->length)
 		{
-			if (map->map[i][j] == 'P')
+			if (game->map[i][j] == 'P')
 			{
 				mlx_image_to_window(mlx, player, j * TILE_SIZE, i * TILE_SIZE);
-				map->images.player = player;
+				game->images.player = player;
 			}
 			j++;
 		}
@@ -88,8 +61,7 @@ void	place_player(mlx_t *mlx, t_map *map)//char **map, int rows, int cols)
 	}
 }
 
-//void	place_coin(mlx_t *mlx, char **map, int rows, int cols)
-void	place_coin(mlx_t *mlx, t_map *map)
+void	place_coin(mlx_t *mlx, t_game *game)
 {
 	mlx_image_t	*coin;
 	int			i;
@@ -97,21 +69,15 @@ void	place_coin(mlx_t *mlx, t_map *map)
 
 	coin = mlx_texture_to_image(mlx, mlx_load_png("./images/coin.png"));
 	i = 0;
-	while (i < map->height)
+	while (i < game->height)
 	{
 		j = 0;
-		while (j < map->length)
+		while (j < game->length)
 		{
-			if (map->map[i][j] == 'C')
+			if (game->map[i][j] == 'C')
 			{
 				mlx_image_to_window(mlx, coin, j * TILE_SIZE, i * TILE_SIZE);
-				map->images.coins = coin;
-		/*		{
-					if (map->images.coins == NULL)
-						map->images.coins = create_node(coin);
-					else
-						add_node_back(&map->images.coins, create_node(coin));
-				}*/
+				game->images.coins = coin;
 			}
 			j++;
 		}
@@ -119,8 +85,7 @@ void	place_coin(mlx_t *mlx, t_map *map)
 	}
 }
 
-//void	place_exit(mlx_t *mlx, char **map, int rows, int cols)
-void	place_exit(mlx_t *mlx, t_map *map)
+void	place_exit(mlx_t *mlx, t_game *game)
 {
 	mlx_image_t	*exit;
 	int			i;
@@ -128,15 +93,16 @@ void	place_exit(mlx_t *mlx, t_map *map)
 
 	exit = mlx_texture_to_image(mlx, mlx_load_png("./images/exit.png"));
 	i = 0;
-	while (i < map->height)
+	while (i < game->height)
 	{
 		j = 0;
-		while (j < map->length)
+		while (j < game->length)
 		{
-			if (map->map[i][j] == 'E')
+			if (game->map[i][j] == 'E')
 			{
 				mlx_image_to_window(mlx, exit, j * TILE_SIZE, i * TILE_SIZE);
-				map->images.exit = exit;
+				game->images.exit = exit;
+				game->images.exit->instances->enabled = false;
 			}
 			j++;
 		}

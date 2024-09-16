@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/15 14:52:01 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/16 11:04:49 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	check_chars(t_game *game)
 		while (game->map[i][j] != '\n' && game->map[i][j] != '\0')
 		{
 			c = game->map[i][j];
-			if (c == 'C'|| c == 'E' || c == 'P')
+			if (c == 'C' || c == 'E' || c == 'P')
 				char_arr[c] = true;
 			j++;
 		}
