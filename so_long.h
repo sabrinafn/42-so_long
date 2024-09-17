@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/17 10:57:34 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:54:32 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_game
 	int				length;
 	int				height;
 	int				moves;
+	int				player_x; // j
+	int				player_y; // i
 	mlx_t			*mlx;
 	t_images		images;
 }	t_game;
@@ -71,10 +73,11 @@ char	*ft_strjoin(char const *s1, char const *s2);
 void	init_window(t_game *game);
 
 // FT_PUT_IMAGES
-void	place_exit(mlx_t *mlx, t_game *game);//char **map, int rows, int cols);
-void	place_coin(mlx_t *mlx, t_game *game);//char **map, int rows, int cols);
-void	place_player(mlx_t *mlx, t_game *game);//har **map, int rows, int cols);
-void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols);
+void	place_exit(mlx_t *mlx, t_game *game);
+void	place_coin(mlx_t *mlx, t_game *game);
+void	place_player(mlx_t *mlx, t_game *game);
+void	place_wall(mlx_t *mlx, t_game *game);
+void	place_floor(mlx_t *mlx, t_game *game);
 
 // FT_UTILS.C
 char	*ft_strrchr(const char *str, int c);
@@ -101,10 +104,9 @@ t_game	*init_map(char *file_name);
 
 // MAIN
 int		is_map_valid(t_game *game);
-int		check_flood_fill(t_game *game);
-void	flood_fill(t_game *game, int x, int y);
-t_coordinates	*find_start_pos(t_game *game);
-t_coordinates	*populate_coord(char p, int x, int y);
-t_game			*ft_map_copy(t_game *game);
+int		check_flood_fill(char **map);
+void	flood_fill(char **map, int x, int y);
+void	find_start_pos(t_game *game);
+char	**ft_map_copy(t_game *game);
 
 #endif

@@ -6,51 +6,33 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/16 14:56:01 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:44:10 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_game	*ft_map_copy(t_game *game)
+char	**ft_map_copy(t_game *game)
 {
-	t_game	*map_copy;
-	char	**str;
+	char	**map_copy;
 	int		i;
 
 	i = 0;
-	str = (char **)malloc(sizeof(char *) * (game->height + 1));
-	if (!str)
+	map_copy = (char **)malloc(sizeof(char *) * (game->height + 1));
+	if (!map_copy)
 		return (NULL);
 	printf("[MALLOC: char ** copy of original char **] ft_valid_map_functions.c\n");
 	while (i < game->height)
 	{
-		str[i] = ft_strdup(game->map[i]);
+		map_copy[i] = ft_strdup(game->map[i]);
 		i++;
 	}
-	str[i] = NULL;
-	printf("[MALLOC: char * copy of lines] ft_valid_map_functions.c\n");
-	map_copy = populate_map_struct(str);
+	map_copy[i] = NULL;
 	return (map_copy);
 }
 
-t_coordinates	*populate_coord(char p, int x, int y)
+void	find_start_pos(t_game *game)
 {
-	t_coordinates	*coord;
-
-	coord = malloc(sizeof(t_coordinates));
-	if (!coord)
-		return (NULL);
-	printf("[MALLOC: t_coordinates *] ft_valid_map_functions.c\n");
-	coord -> value = p;
-	coord -> x = x;
-	coord -> y = y;
-	return (coord);
-}
-
-t_coordinates	*find_start_pos(t_game *game)
-{
-	t_coordinates	*p_pos;
 	int				i;
 	int				j;
 
@@ -63,40 +45,39 @@ t_coordinates	*find_start_pos(t_game *game)
 		{
 			if (game->map[i][j] == 'P')
 			{
-				p_pos = populate_coord(game->map[i][j], j, i);
-				return (p_pos);
+				game->player_y = i;
+				game->player_x = j;
 			}
 			j++;
 		}
 		i++;
 	}
-	return (NULL);
 }
 
-void	flood_fill(t_game *game, int x, int y)
+void	flood_fill(char **map, int x, int y)
 {
-	if (game -> map[y][x] == '1')
+	if (map[y][x] == '1')
 		return ;
-	game -> map[y][x] = '1';
-	flood_fill(game, x - 1, y);
-	flood_fill(game, x, y - 1);
-	flood_fill(game, x + 1, y);
-	flood_fill(game, x, y + 1);
+	map[y][x] = '1';
+	flood_fill(map, x - 1, y);
+	flood_fill(map, x, y - 1);
+	flood_fill(map, x + 1, y);
+	flood_fill(map, x, y + 1);
 }
 
-int	check_flood_fill(t_game *game)
-{
+int	check_flood_fill(char **map)
+{	
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	while (game -> map[i] != NULL)
+	while (map[i] != NULL)
 	{
 		j = 0;
-		while (game -> map[i][j] != '\n' && game -> map[i][j] != '\0')
+		while (map[i][j] != '\n' && map[i][j] != '\0')
 		{
-			if (ft_strrchr("CEP", game -> map[i][j]))
+			if (ft_strrchr("CEP", map[i][j]))
 				return (0);
 			j++;
 		}
@@ -107,31 +88,25 @@ int	check_flood_fill(t_game *game)
 
 int	is_map_valid(t_game *game)
 {
-	t_game			*copy;
-	t_coordinates	*player;
+	char			**map_copy;
 	int				res;
 	int				j;
 
 	j = 0;
-	copy = ft_map_copy(game);
-	if (!copy)
+	map_copy = ft_map_copy(game);
+	if (!map_copy)
 		return (0);
-	player = find_start_pos(copy); // only send the str + int i and int j to pass to floodfill
-	flood_fill(copy, player->x, player->y); // maybe call floodfill in another function
-	// that call findstartpos as well. the function would return the value
-	res = check_flood_fill(copy); 
-	while (copy -> map[j])
+	find_start_pos(game);
+	flood_fill(map_copy, game->player_x, game->player_y);
+	res = check_flood_fill(map_copy);
+	while (map_copy[j])
 	{
-		free(copy -> map[j]);
+		free(map_copy[j]);
 		j++;
 	}
 	printf("[  FREE: char * copy of lines] ft_valid_map_functions.c\n");
 	printf("[  FREE: char ** copy of original char **] ft_valid_map_functions.c\n");
-	free(copy->map);
-	printf("[  FREE: t_game struct] ft_init_map.c\n");
-	free(copy);
-	printf("[  FREE: t_coordinates *] ft_valid_map_functions.c\n");
-	free(player);
+	free(map_copy);
 	if (!res)
 		return (0);
 	return (1);

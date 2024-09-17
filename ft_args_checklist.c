@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_args_check.c                                    :+:      :+:    :+:   */
+/*   ft_args_checklist.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/15 14:47:59 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:13:50 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int	check_map(t_game *game)
 	if (!duplicate_exit_or_start(game))
 		return (0);
 	if (!is_map_valid(game))
-		return (0);
+		return (0);	
+	if (game->height > 1080 && game->length > 1920)
+		return(1);
 	return (1);
 }
 

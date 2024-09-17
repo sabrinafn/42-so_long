@@ -6,44 +6,69 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/16 13:33:51 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:55:00 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	render_initial_map(mlx_t *mlx, char **map, int rows, int cols)
+void	place_wall(mlx_t *mlx, t_game *game)
 {
-	mlx_image_t	*wall;
-	mlx_image_t	*floor;
-	int			i;
-	int			j;
+	mlx_image_t		*wall;
+	mlx_texture_t	*wall_texture;
+	int				i;
+	int				j;
 
-	wall = mlx_texture_to_image(mlx, mlx_load_png("./images/wall.png"));
-	floor = mlx_texture_to_image(mlx, mlx_load_png("./images/floor.png"));
+	wall_texture = mlx_load_png("./images/wall.png");
+	wall = mlx_texture_to_image(mlx, wall_texture);
 	i = 0;
-	while (i < rows)
+	while (i < game->height)
 	{
 		j = 0;
-		while (j < cols)
+		while (j < game->length)
 		{
-			if (map[i][j] == '1')
+			if (game->map[i][j] == '1')
 				mlx_image_to_window(mlx, wall, j * TILE_SIZE, i * TILE_SIZE);
-			else
+			j++;
+		}
+		i++;
+	}
+	mlx_delete_texture(wall_texture);
+}
+
+void	place_floor(mlx_t *mlx, t_game *game)
+{
+	mlx_image_t		*floor;
+	mlx_texture_t	*floor_texture;
+	int				i;
+	int				j;
+
+	floor_texture = mlx_load_png("./images/floor.png");
+	floor = mlx_texture_to_image(mlx, floor_texture);
+	i = 0;
+	while (i < game->height)
+	{
+		j = 0;
+		while (j < game->length)
+		{
+			if (game->map[i][j] != '1')
 				mlx_image_to_window(mlx, floor, j * TILE_SIZE, i * TILE_SIZE);
 			j++;
 		}
 		i++;
 	}
+	mlx_delete_texture(floor_texture);
 }
 
 void	place_player(mlx_t *mlx, t_game *game)
 {
-	mlx_image_t	*player;
-	int			i;
-	int			j;
+	mlx_image_t		*player;
+	mlx_texture_t	*player_texture;
+	int				i;
+	int				j;
 
-	player = mlx_texture_to_image(mlx, mlx_load_png("./images/bananacat.png"));
+	player_texture = mlx_load_png("./images/bananacat.png");
+	player = mlx_texture_to_image(mlx, player_texture);
 	i = 0;
 	while (i < game->height)
 	{
@@ -59,15 +84,18 @@ void	place_player(mlx_t *mlx, t_game *game)
 		}
 		i++;
 	}
+	mlx_delete_texture(player_texture);
 }
 
 void	place_coin(mlx_t *mlx, t_game *game)
 {
-	mlx_image_t	*coin;
-	int			i;
-	int			j;
+	mlx_image_t		*coin;
+	mlx_texture_t	*coin_texture;
+	int				i;
+	int				j;
 
-	coin = mlx_texture_to_image(mlx, mlx_load_png("./images/coin.png"));
+	coin_texture = mlx_load_png("./images/coin.png");
+	coin = mlx_texture_to_image(mlx, coin_texture);
 	i = 0;
 	while (i < game->height)
 	{
@@ -83,15 +111,18 @@ void	place_coin(mlx_t *mlx, t_game *game)
 		}
 		i++;
 	}
+	mlx_delete_texture(coin_texture);
 }
 
 void	place_exit(mlx_t *mlx, t_game *game)
 {
-	mlx_image_t	*exit;
-	int			i;
-	int			j;
+	mlx_image_t		*exit;
+	mlx_texture_t	*exit_texture;
+	int				i;
+	int				j;
 
-	exit = mlx_texture_to_image(mlx, mlx_load_png("./images/exit.png"));
+	exit_texture = mlx_load_png("./images/exit.png");
+	exit = mlx_texture_to_image(mlx, exit_texture);
 	i = 0;
 	while (i < game->height)
 	{
@@ -108,4 +139,5 @@ void	place_exit(mlx_t *mlx, t_game *game)
 		}
 		i++;
 	}
+	mlx_delete_texture(exit_texture);
 }
