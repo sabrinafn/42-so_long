@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/16 14:14:52 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/17 10:57:34 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		check_ber(char *str);
 
 // 	FT_INIT_MAP.C
 t_game	*populate_map_struct(char **map);
-int		count_line_infd(char *file_name);
+int		ft_file_len(char *filename);
 char	**read_map(int fd, int line_count);
 t_game	*init_map(char *file_name);
 

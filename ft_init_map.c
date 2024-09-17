@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/16 10:36:12 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/17 11:05:09 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,25 @@ t_game	*populate_map_struct(char **map)
 	return (game);
 }
 
-int	count_line_infd(char *file_name)
+int	ft_file_len(char *filename)
 {
 	int			i;
 	int			fd;
 	char		*temp;
 
 	i = 0;
-	fd = open(file_name, O_RDONLY);
+	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (-1);
 	while (1)
 	{
 		temp = get_next_line(fd);
-		if (!temp)
+		if (temp == NULL)
 			break ;
+		i++;
 		printf("[MALLOC: GNL line count] ft_init_map.c\n");
 		free(temp);
 		printf("[  FREE: GNL line count] ft_init_map.c\n");
-		i++;
 	}
 	close(fd);
 	return (i);
@@ -82,17 +82,19 @@ char	**read_map(int fd, int line_count)
 	return (map);
 }
 
-t_game	*init_map(char *file_name)
+t_game	*init_map(char *filename)
 {
 	int			fd;
 	int			count;
 	t_game		*game;
 	char		**map_array;
 
-	fd = open(file_name, O_RDONLY);
+	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (NULL);
-	count = count_line_infd(file_name);
+	count = ft_file_len(filename);
+	if (count == -1)
+		return (NULL);
 	map_array = read_map(fd, count);
 	close(fd);
 	if (!map_array)
