@@ -19,9 +19,10 @@ CFILES := main.c \
 	ft_check_args.c \
 	ft_args_checklist.c \
 	ft_init_map.c \
-	ft_valid_map_functions.c \
+	ft_check_valid_path.c \
 	ft_init_window.c \
-	ft_put_images.c \
+	ft_init_window_utils.c \
+	ft_put_images.c 
 
 OFILES := $(CFILES:.c=.o)
 
@@ -44,7 +45,4 @@ fclean: clean
 
 re: fclean all
 
-v:
-	 valgrind --suppressions=ft_supress_mlx.txt --leak-check=full --show-leak-kinds=all ./so_long map.ber
-
-.PHONY: all clean fclean re v
+.PHONY: all clean fclean re

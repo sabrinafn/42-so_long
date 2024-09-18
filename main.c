@@ -6,49 +6,41 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/17 14:55:54 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:36:44 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void	ft_error(char *str)
+{
+	ft_putstr_fd(str, 2);
+	exit(1);
+}
+
 int	main(int ac, char **av)
 {
 	t_game	*game;
+	int		i;
 
-	if (ac > 1)
+	if (ac != 2)
 	{
-		if (!check_ber(av[1]))
-		{
-			//ft_putstr("not a ber file\n", 2);
-			return (0);
-		}
-		game = init_map(av[1]);
-		if (game)
-		{
-			if (check_map(game))
-			{
-				//ft_putstr("check_map OK\n", 1);
-				init_window(game);
-			}			
-//			else
-				//ft_putstr("check_map KO\n", 2);
-			int i = 0;
-			while (game->map[i])
-			{
-				free(game->map[i]);
-				i++;
-			}
-			printf("[  FREE: GNL store line] main.c\n");
-			free(game->map);
-			printf("[  FREE: char ** for map] main.c\n");
-			free(game);
-			printf("[  FREE: t_game struct] main.c\n");
-		}
-//		else
-			//ft_putstr("Error\n", 2);
+		ft_error("Error\nThe correct usage is: ./so_long filename\n");
 	}
-//	else
-	//	ft_putstr("Error\n", 2);
+	if (!is_ber_filetype(av[1]))
+		ft_error("Error\nThe file must be of type 'ber'.\n");
+	game = init_map(av[1]);
+	if (!game)
+		ft_error("Error\nThe file is not valid.\n");
+	if (check_map(game))
+		init_window(game);
+	i = 0;
+	while (game->map[i])
+	{
+		free(game->map[i]);
+		i++;
+	}
+	free(game->map);
+	free(game);
 	return (0);
 }

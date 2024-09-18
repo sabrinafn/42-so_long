@@ -58,7 +58,7 @@ int	is_wall(t_game *game)
 	return (1);
 }
 
-int	duplicate_exit_or_start(t_game *game)
+int	duplicate_exit_or_player(t_game *game)
 {
 	int		i;
 	int		j;
@@ -86,7 +86,7 @@ int	duplicate_exit_or_start(t_game *game)
 	return (1);
 }
 
-int	check_chars(t_game *game)
+int	are_valid_chars_present(t_game *game)
 {
 	int		i;
 	int		j;
@@ -114,7 +114,7 @@ int	check_chars(t_game *game)
 	return (0);
 }
 
-int	is_invalid_char(t_game *game)
+int	is_valid_char(t_game *game)
 {
 	int			i;
 	int			j;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_valid_map_functions.c                           :+:      :+:    :+:   */
+/*   ft_check_valid_path.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:40:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/17 11:44:10 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:22:40 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	**ft_map_copy(t_game *game)
 	map_copy = (char **)malloc(sizeof(char *) * (game->height + 1));
 	if (!map_copy)
 		return (NULL);
-	printf("[MALLOC: char ** copy of original char **] ft_valid_map_functions.c\n");
 	while (i < game->height)
 	{
 		map_copy[i] = ft_strdup(game->map[i]);
@@ -31,7 +30,7 @@ char	**ft_map_copy(t_game *game)
 	return (map_copy);
 }
 
-void	find_start_pos(t_game *game)
+void	find_player_position(t_game *game)
 {
 	int				i;
 	int				j;
@@ -96,7 +95,7 @@ int	is_map_valid(t_game *game)
 	map_copy = ft_map_copy(game);
 	if (!map_copy)
 		return (0);
-	find_start_pos(game);
+	find_player_position(game);
 	flood_fill(map_copy, game->player_x, game->player_y);
 	res = check_flood_fill(map_copy);
 	while (map_copy[j])
@@ -104,8 +103,6 @@ int	is_map_valid(t_game *game)
 		free(map_copy[j]);
 		j++;
 	}
-	printf("[  FREE: char * copy of lines] ft_valid_map_functions.c\n");
-	printf("[  FREE: char ** copy of original char **] ft_valid_map_functions.c\n");
 	free(map_copy);
 	if (!res)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 12:43:23 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/16 14:14:32 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:35:05 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,28 @@ void	ft_putstr_fd(char *str, int fd)
 	{
 		write(fd, &str[i], 1);
 		i++;
+	}
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	char		num;
+	long int	ln;
+
+	ln = n;
+	if (ln < 0)
+	{
+		ln = -ln;
+		write(fd, "-", 1);
+	}
+	if (ln > 9)
+	{
+		ft_putnbr_fd(ln / 10, fd);
+		ft_putnbr_fd(ln % 10, fd);
+	}
+	if (ln < 10)
+	{
+		num = ln + '0';
+		write(fd, &num, 1);
 	}
 }

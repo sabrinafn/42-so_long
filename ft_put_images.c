@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 14:35:45 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/17 14:55:00 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:53:56 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 void	place_wall(mlx_t *mlx, t_game *game)
 {
 	mlx_image_t		*wall;
+	mlx_image_t		*wall_two;
 	mlx_texture_t	*wall_texture;
+	mlx_texture_t	*wall_texture_two;
 	int				i;
 	int				j;
 
-	wall_texture = mlx_load_png("./images/wall.png");
+	wall_texture = mlx_load_png("./images/wall1.png");
+	wall_texture_two = mlx_load_png("./images/wall2.png");
 	wall = mlx_texture_to_image(mlx, wall_texture);
+	wall_two = mlx_texture_to_image(mlx, wall_texture_two);
 	i = 0;
 	while (i < game->height)
 	{
@@ -28,12 +32,18 @@ void	place_wall(mlx_t *mlx, t_game *game)
 		while (j < game->length)
 		{
 			if (game->map[i][j] == '1')
-				mlx_image_to_window(mlx, wall, j * TILE_SIZE, i * TILE_SIZE);
+			{
+				if (j % 2 == 0)
+					mlx_image_to_window(mlx, wall, j * TILE_SIZE, i * TILE_SIZE);
+				if (j % 2 != 0)
+					mlx_image_to_window(mlx, wall_two, j * TILE_SIZE, i * TILE_SIZE);
+			}
 			j++;
 		}
 		i++;
 	}
 	mlx_delete_texture(wall_texture);
+	mlx_delete_texture(wall_texture_two);
 }
 
 void	place_floor(mlx_t *mlx, t_game *game)
