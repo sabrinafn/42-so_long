@@ -6,7 +6,7 @@
 /*   By: sabrifer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 09:52:43 by sabrifer          #+#    #+#             */
-/*   Updated: 2024/09/19 15:40:00 by sabrifer         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:36:00 by sabrifer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "MLX42/include/MLX42/MLX42.h"
 
 # define TILE_SIZE 32
-# define MAX_HEIGHT 1080
+# define MAX_HEIGHT 992
 # define MAX_LENGTH 1920
 
 typedef struct s_images
