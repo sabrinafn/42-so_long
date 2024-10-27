@@ -4,7 +4,7 @@ CC := cc
 
 FLAGS := -Wall -Wextra -Werror
 
-HEADER := so_long.h
+HEADER := .
 
 MLX42 := ./MLX42/build/libmlx42.a
 
